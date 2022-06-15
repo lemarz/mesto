@@ -2,12 +2,13 @@
    font-family: 'Inter', Arial, sans-serif;
    background-color: #000000;
    margin: 0;
+   color: white;
 }
 
 .header {
-   margin: 0 auto;
+   margin: 0 auto 40px;
    padding-top: 45px;
-   max-width: 1280px;
+   max-width: 880px;
    min-width: 320px;
    min-height: 74px;
    border-bottom: 1px solid #545454;
@@ -15,6 +16,7 @@
 
 @media screen and (max-width: 767px) {
    .header {
+      padding-top: 28px;
       min-height: 56px;
    }
 }
@@ -30,4 +32,70 @@
    .header__logo {
       margin-left: 27px;
    }
+}
+
+
+
+.profile {
+   margin: 0 auto 51px;
+   max-width: 880px;
+   min-width: 320px;
+   min-height: 120 px;
+
+
+   display: flex;
+   align-items: center;
+}
+
+.profile__avatar {
+   border-radius: 50%;
+   height: 120px;
+   width: 120px;
+
+   margin-right: 30px;
+}
+
+.profile__info {
+   display: grid;
+   grid-template-columns: 1fr 24px;
+   gap: 18px;
+   align-items: center;
+}
+
+.profile__name {
+   margin: 0;
+   font-size: 42px;
+   line-height: 48px;
+   font-weight: 500;
+   font-style: normal;
+}
+
+.profile__description {
+   margin: 0;
+   font-size: 18px;
+   line-height: 22px;
+   font-weight: normal;
+   font-style: normal;
+}
+
+.profile__edit-button {
+   width: 24px;
+   height: 24px;
+   background-color: black;
+   border: 1px solid white;
+   background-image: url(./images/edit-button.png);
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+.profile__add-button {
+   width: 150px;
+   height: 50px;
+   background-color: black;
+   border: 2px solid white;
+   background-image: url(./images/add-button.png);
+   background-position: center;
+   background-repeat: no-repeat;
+   margin-left: auto;
+   justify-self: end;
 }
