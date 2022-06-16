@@ -1,0 +1,13 @@
+.element__like-button {
+   padding: 0 15px;
+   width: 22px;
+   height: 19px;
+   border: none;
+   margin-left: auto;
+   margin-right: 30px;
+   justify-self: flex-end;
+}
+
+.element__like-button:hover {
+   opacity: 0.5;
+}
