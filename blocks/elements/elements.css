@@ -6,3 +6,9 @@
    grid-row-gap: 20px;
    justify-content: center;
 }
+
+@media screen and (max-width: 767px) {
+   .elements {
+      margin-bottom: 48px;
+   }
+}

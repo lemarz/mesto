@@ -7,3 +7,10 @@
    margin-left: auto;
    justify-self: end;
 }
+
+@media screen and (max-width: 767px) {
+   .profile__add-button {
+      margin: 0;
+      width: 282px;
+   }
+}
