@@ -64,14 +64,24 @@
    font-style: normal;
 }
 
+.button {
+   background-color: transparent;
+   background-position: center;
+   background-repeat: no-repeat;
+   transition: opacity 0.4s ease;
+
+}
+
+.button:hover {
+   opacity: .6;
+}
+
 .profile__edit-button {
    width: 24px;
    height: 24px;
    background-color: black;
    border: 1px solid white;
    background-image: url(./images/edit-button.png);
-   background-position: center;
-   background-repeat: no-repeat;
 }
 
 .profile__add-button {
@@ -80,8 +90,6 @@
    background-color: black;
    border: 2px solid white;
    background-image: url(./images/add-button.png);
-   background-position: center;
-   background-repeat: no-repeat;
    margin-left: auto;
    justify-self: end;
 }
@@ -133,16 +141,16 @@
 
 .element__like-button {
    padding: 0 15px;
-   background-color: white;
    width: 22px;
    height: 19px;
-   background-position: center;
-   background-repeat: no-repeat;
    border: none;
-
    margin-left: auto;
    margin-right: 30px;
    justify-self: flex-end;
+}
+
+.element__like-button:hover {
+   opacity: 0.5;
 }
 
 .element__like-button_disabled {
@@ -236,17 +244,17 @@
    line-height: 22px;
    text-align: center;
    margin-top: 48px;
+}
 
+.popup__save-button:hover {
+   opacity: 0.8;
 }
 
 .popup__close-button {
    width: 32px;
    height: 32px;
-   background-color: transparent;
    border: none;
    background-image: url(./images/close-icon.svg);
-   background-position: center;
-   background-repeat: no-repeat;
    position: relative;
    bottom: 340px;
    left: 440px;
