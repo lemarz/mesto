@@ -7,12 +7,17 @@ let profileDescription = document.querySelector('.profile__description')
 let inputName = document.querySelector('.popup__input_el_name')
 let inputDescription = document.querySelector('.popup__input_el_description')
 
-inputName.value = profileName.textContent
-inputDescription.value = profileDescription.textContent
+
+function openPopup() {
+   inputName.value = profileName.textContent;
+   inputDescription.value = profileDescription.textContent;
+   popup.classList.add('popup_opened');
+}
 
 function closePopup() {
    popup.classList.remove('popup_opened')
 }
+
 function formSubmitHandler(evt) {
    evt.preventDefault();
    profileName.textContent = inputName.value
@@ -20,6 +25,7 @@ function formSubmitHandler(evt) {
    closePopup()
 }
 
-editButton.addEventListener('click', () => { popup.classList.add('popup_opened') })
+
+editButton.addEventListener('click', openPopup)
 closeButton.addEventListener('click', closePopup)
 formElement.addEventListener('submit', formSubmitHandler);
