@@ -11,7 +11,6 @@
    .header {
       margin: 0 auto 0;
       padding-top: 28px;
-      max-height: 56px;
-      box-sizing: border-box;
+      min-height: 56px;
    }
 }
