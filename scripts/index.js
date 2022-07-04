@@ -9,7 +9,7 @@ const editFormElement = editPopup.querySelector('.popup__form')
 editFormElement.addEventListener('submit', editFormSubmitHandler);
 
 const addFormElement = addPopup.querySelector('.popup__form')
-addPopup.addEventListener('submit', addFormSubmitHandler);
+addPopup.addEventListener('submit', newItemFormSubmitHandler);
 
 let profileName = document.querySelector('.profile__name')
 let profileDescription = document.querySelector('.profile__description')
@@ -35,7 +35,7 @@ function editFormSubmitHandler(evt) {
    closePopup(evt)
 }
 
-function addFormSubmitHandler(evt) {
+function newItemFormSubmitHandler(evt) {
    evt.preventDefault();
 
    let title = addPopup.querySelector('.popup__input_el_title').value
