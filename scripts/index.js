@@ -1,5 +1,7 @@
 const editPopup = document.querySelector('#edit-popup')
 const addPopup = document.querySelector('#add-popup')
+const imgPopup = document.querySelector('.viewer-popup')
+
 
 let editButton = document.querySelector('.profile__edit-button')
 
@@ -101,6 +103,21 @@ const renderCard = (title, link) => {
 
    const likeButton = newCard.querySelector('.element__like-button')
    likeButton.addEventListener('click', handleLike)
+
+   const cardImg = newCard.querySelector('.element__image')
+
+   cardImg.addEventListener('click', openViewerPopup)
+
+}
+
+function openViewerPopup(evt) {
+   const viewerPop = document.querySelector('.viewer-popup')
+
+   viewerPop.querySelector('.viewer-popup__image').src = evt.target.src
+   viewerPop.querySelector('.viewer-popup__title').textContent = evt.target.parentNode.querySelector('.element__title').textContent
+   viewerPop.querySelector('.viewer-popup__image').alt = evt.target.parentNode.querySelector('.element__title').textContent
+
+   openPopup(imgPopup)
 }
 
 const renderInitialCards = () => {
