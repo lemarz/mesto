@@ -42,3 +42,10 @@
 @import url(../blocks/popup/__input/_el/popup__input_el_title.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
+
+@import url(../blocks/viewer-popup/viewer-popup.css);
+@import url(../blocks/viewer-popup/__container/viewer-popup__container.css);
+@import url(../blocks/viewer-popup/__image/viewer-popup__image.css);
+@import url(../blocks/viewer-popup/__figure/viewer-popup__figure.css);
+@import url(../blocks/viewer-popup/__title/viewer-popup__title.css);
+@import url(../blocks/viewer-popup/__close-button/viewer-popup__close-button.css);
