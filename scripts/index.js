@@ -91,7 +91,7 @@ const cardPlace = document.querySelector('.elements')
 
 const renderCard = (title, link) => {
    const newCard = templateCard.querySelector('.element').cloneNode(true)
-   cardPlace.append(newCard)
+   cardPlace.prepend(newCard)
    newCard.querySelector('.element__title').textContent = title
    newCard.querySelector('.element__image').alt = title
    newCard.querySelector('.element__image').src = link
