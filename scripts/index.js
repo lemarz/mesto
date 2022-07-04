@@ -67,6 +67,9 @@ const renderCard = (title, link) => {
    newCard.querySelector('.element__title').textContent = title
    newCard.querySelector('.element__image').alt = title
    newCard.querySelector('.element__image').src = link
+
+   const deleteButton = newCard.querySelector('.element__delete-button')
+   deleteButton.addEventListener('click', handleDelete)
 }
 
 const renderInitialCards = () => {
@@ -84,3 +87,8 @@ document.querySelectorAll('.element__like-button').forEach((item) => {
    })
 })
 
+
+
+function handleDelete(evt) {
+   evt.target.closest('.element').remove()
+}
