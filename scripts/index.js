@@ -1,34 +1,62 @@
-let popup = document.querySelector('.popup')
+const editPopup = document.querySelector('#edit-popup')
+const addPopup = document.querySelector('#add-popup')
+
 let editButton = document.querySelector('.profile__edit-button')
-let closeButton = document.querySelector('.popup__close-button')
-let formElement = document.querySelector('.popup__form')
+
+const editFormElement = editPopup.querySelector('.popup__form')
+editFormElement.addEventListener('submit', editFormSubmitHandler);
+
+const addFormElement = addPopup.querySelector('.popup__form')
+addPopup.addEventListener('submit', addFormSubmitHandler);
+
 let profileName = document.querySelector('.profile__name')
 let profileDescription = document.querySelector('.profile__description')
 let inputName = document.querySelector('.popup__input_el_name')
 let inputDescription = document.querySelector('.popup__input_el_description')
 
+function openPopup(el) {
+   el.classList.add('popup_opened');
+   let elCloseBut = el.querySelector('.popup__close-button')
 
-function openPopup() {
-   inputName.value = profileName.textContent;
-   inputDescription.value = profileDescription.textContent;
-   popup.classList.add('popup_opened');
+   let closeButton = el.querySelector('.popup__close-button')
+   closeButton.addEventListener('click', closePopup)
 }
 
-function closePopup() {
-   popup.classList.remove('popup_opened')
+function closePopup(el) {
+   el.target.parentNode.parentNode.classList.remove('popup_opened')
 }
 
-function formSubmitHandler(evt) {
+function editFormSubmitHandler(evt) {
    evt.preventDefault();
    profileName.textContent = inputName.value
    profileDescription.textContent = inputDescription.value
-   closePopup()
+   closePopup(evt)
 }
 
+function addFormSubmitHandler(evt) {
+   evt.preventDefault();
 
-editButton.addEventListener('click', openPopup)
-closeButton.addEventListener('click', closePopup)
-formElement.addEventListener('submit', formSubmitHandler);
+   let title = addPopup.querySelector('.popup__input_el_title').value
+   let link = addPopup.querySelector('.popup__input_el_link').value
+   renderCard(title, link)
+   addPopup.querySelector('.popup__input_el_title').value = ''
+   addPopup.querySelector('.popup__input_el_link').value = ''
+
+   closePopup(evt)
+}
+
+editButton.addEventListener('click', () => {
+   inputName.value = profileName.textContent;
+   inputDescription.value = profileDescription.textContent;
+   openPopup(editPopup)
+})
+
+
+const addButton = document.querySelector('.profile__add-button')
+addButton.addEventListener('click', () => {
+   openPopup(addPopup)
+})
+
 
 const initialCards = [
    {
