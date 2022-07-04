@@ -70,6 +70,9 @@ const renderCard = (title, link) => {
 
    const deleteButton = newCard.querySelector('.element__delete-button')
    deleteButton.addEventListener('click', handleDelete)
+
+   const likeButton = newCard.querySelector('.element__like-button')
+   likeButton.addEventListener('click', handleLike)
 }
 
 const renderInitialCards = () => {
@@ -80,14 +83,9 @@ const renderInitialCards = () => {
 }
 renderInitialCards()
 
-
-document.querySelectorAll('.element__like-button').forEach((item) => {
-   item.addEventListener('click', evt => {
-      evt.target.classList.toggle('element__like-button_active')
-   })
-})
-
-
+function handleLike(evt) {
+   evt.target.classList.toggle('element__like-button_active')
+}
 
 function handleDelete(evt) {
    evt.target.closest('.element').remove()
