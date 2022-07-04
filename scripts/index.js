@@ -61,7 +61,7 @@ const templateCard = document.querySelector('#card').content
 const cardPlace = document.querySelector('.elements')
 
 
-let renderCard = (title, link) => {
+const renderCard = (title, link) => {
    const newCard = templateCard.querySelector('.element').cloneNode(true)
    cardPlace.append(newCard)
    newCard.querySelector('.element__title').textContent = title
@@ -69,12 +69,18 @@ let renderCard = (title, link) => {
    newCard.querySelector('.element__image').src = link
 }
 
-
-let renderInitialCards = () => {
-   initialCards.forEach((item, index) => {
+const renderInitialCards = () => {
+   initialCards.forEach((item) => {
       renderCard(item.name, item.link)
    }
    )
 }
-
 renderInitialCards()
+
+
+document.querySelectorAll('.element__like-button').forEach((item) => {
+   item.addEventListener('click', evt => {
+      evt.target.classList.toggle('element__like-button_active')
+   })
+})
+
