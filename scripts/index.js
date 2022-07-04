@@ -29,3 +29,52 @@ function formSubmitHandler(evt) {
 editButton.addEventListener('click', openPopup)
 closeButton.addEventListener('click', closePopup)
 formElement.addEventListener('submit', formSubmitHandler);
+
+const initialCards = [
+   {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+   },
+   {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+   },
+   {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+   },
+   {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+   },
+   {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+   },
+   {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+   }
+];
+
+const templateCard = document.querySelector('#card').content
+const cardPlace = document.querySelector('.elements')
+
+
+let renderCard = (title, link) => {
+   const newCard = templateCard.querySelector('.element').cloneNode(true)
+   cardPlace.append(newCard)
+   newCard.querySelector('.element__title').textContent = title
+   newCard.querySelector('.element__image').alt = title
+   newCard.querySelector('.element__image').src = link
+}
+
+
+let renderInitialCards = () => {
+   initialCards.forEach((item, index) => {
+      renderCard(item.name, item.link)
+   }
+   )
+}
+
+renderInitialCards()
