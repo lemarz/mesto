@@ -1,7 +1,7 @@
 const editPopup = document.querySelector('#edit-popup')
 const addPopup = document.querySelector('#add-popup')
 const imgPopup = document.querySelector('.viewer-popup')
-
+let popup = document.querySelector('.popup');
 
 let editButton = document.querySelector('.profile__edit-button')
 
@@ -18,7 +18,6 @@ let inputDescription = document.querySelector('.popup__input_el_description')
 
 function openPopup(el) {
    el.classList.add('popup_opened');
-   let elCloseBut = el.querySelector('.popup__close-button')
 
    let closeButton = el.querySelector('.popup__close-button')
    closeButton.addEventListener('click', closePopup)
