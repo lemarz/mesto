@@ -30,12 +30,6 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
-/* @import url(../blocks/viewer-popup/viewer-popup.css);
-@import url(../blocks/viewer-popup/__container/viewer-popup__container.css);
-@import url(../blocks/viewer-popup/__image/viewer-popup__image.css);
-@import url(../blocks/viewer-popup/__figure/viewer-popup__figure.css);
-@import url(../blocks/viewer-popup/__title/viewer-popup__title.css);
-@import url(../blocks/viewer-popup/__close-button/viewer-popup__close-button.css); */
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__container/popup__container.css);
