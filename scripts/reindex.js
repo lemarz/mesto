@@ -13,13 +13,16 @@ const profileDescription = document.querySelector('.profile__description')
 
 //* кнопки для открытия попапа
 const editButton = document.querySelector('.profile__edit-button')
+const addButton = document.querySelector('.profile__add-button')
 
 
 //* кнопки для закрытия попапа
 const editPopupCloseButton = editPopup.querySelector('.popup__close-button')
+const addPopupCloseButton = addPopup.querySelector('.popup__close-button')
 
 //* Субмиты
 const editFormElement = editPopup.querySelector('.popup__form')
+const addFormElement = addPopup.querySelector('.popup__form')
 
 
 
@@ -28,6 +31,9 @@ const templateCard = document.querySelector('#card').content
 const cardPlace = document.querySelector('.elements')
 
 
+//* Поля создания новой карточки
+const newCardTitle = addPopup.querySelector('.popup__input_el_title')
+const newCardLink = addPopup.querySelector('.popup__input_el_link')
 
 //!______________________________________________________
 //!______________________________________________________
@@ -83,6 +89,15 @@ function handleProfileFormSubmit(evt) {
    closePopup(editPopup)
 }
 
+//*  Добавить новую карточку пользователя
+function handleAddFormSubmit(evt) {
+   evt.preventDefault();
+   addCard(newCardTitle.value, newCardLink.value)
+   closePopup(addPopup)
+   newCardTitle.value = ''
+   newCardLink.value = ''
+}
+
 //* удалить карточку
 function handleDelete(evt) {
    evt.target.closest('.element').remove()
@@ -97,15 +112,19 @@ function handleLike(evt) {
 //!______________________________________________________
 
 //* Слушатели для редактирования профиля
-editFormElement.addEventListener('submit', handleProfileFormSubmit);
-
-editPopupCloseButton.addEventListener('click', () => closePopup(editPopup))
-
 editButton.addEventListener('click', () => {
    inputName.value = profileName.textContent;
    inputDescription.value = profileDescription.textContent;
    openPopup(editPopup)
-})
+});
+editPopupCloseButton.addEventListener('click', () => closePopup(editPopup));
+editFormElement.addEventListener('submit', handleProfileFormSubmit);
+
+
+//* Слушатели для добавления карточки
+addButton.addEventListener('click', () => { openPopup(addPopup) });
+addPopupCloseButton.addEventListener('click', () => closePopup(addPopup));
+addFormElement.addEventListener('submit', handleAddFormSubmit);
 
 
 
