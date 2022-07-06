@@ -32,8 +32,8 @@ const newCardTitle = addPopup.querySelector('.popup__input_el_title')
 const newCardLink = addPopup.querySelector('.popup__input_el_link')
 
 //* Источники во viewerPopup
-let imgTitle = viewerPopup.querySelector('.popup__viewer-title')
-let imgLink = viewerPopup.querySelector('.popup__viewer-image')
+const imgTitle = viewerPopup.querySelector('.popup__viewer-title')
+const imgLink = viewerPopup.querySelector('.popup__viewer-image')
 
 //!
 
@@ -107,6 +107,7 @@ function handleLike(evt) {
 //* Открыть нужную карточку во viewer
 function viewerFunction(evt) {
    imgLink.src = evt.target.src
+   imgLink.alt = evt.target.alt
    imgTitle.textContent = evt.target.alt
    openPopup(viewerPopup)
 }
