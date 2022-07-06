@@ -38,8 +38,8 @@ const imgLink = viewerPopup.querySelector('.popup__viewer-image')
 //!
 
 //* добавить зарендаренную карточку
-function addCard(title, link) {
-   cardPlace.prepend(renderCard(title, link))
+function addCard(place, title, link) {
+   place.prepend(renderCard(title, link))
 }
 
 //* зарендорить карточку
@@ -63,7 +63,7 @@ function renderCard(title, link) {
 //* добавить карточки "из коробки"
 function createInitialCards() {
    initialCards.forEach((item) => {
-      addCard(item.name, item.link)
+      addCard(cardPlace, item.name, item.link)
    })
 }
 
@@ -88,7 +88,7 @@ function handleProfileFormSubmit(evt) {
 //*  Добавить новую карточку пользователя
 function handleAddFormSubmit(evt) {
    evt.preventDefault();
-   addCard(newCardTitle.value, newCardLink.value)
+   addCard(cardPlace, newCardTitle.value, newCardLink.value)
    closePopup(addPopup)
    newCardTitle.value = ''
    newCardLink.value = ''
