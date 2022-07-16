@@ -35,7 +35,7 @@ const newCardLink = addPopup.querySelector('.popup__input_el_link')
 const imgTitle = viewerPopup.querySelector('.popup__viewer-title')
 const imgLink = viewerPopup.querySelector('.popup__viewer-image')
 
-//!
+//!__________
 
 //* добавить зарендаренную карточку
 function addCard(place, title, link) {
@@ -111,7 +111,14 @@ function viewerFunction(evt) {
    openPopup(viewerPopup)
 }
 
-//!
+//* Закрытие попапа по клику на оверлей
+const handleClickOverlay = (evt) => {
+   if(evt.target === evt.currentTarget) {
+      closePopup(evt.target);
+   }}
+
+
+//!__________
 
 //* Слушатели для редактирования профиля
 editButton.addEventListener('click', () => {
@@ -129,5 +136,13 @@ addFormElement.addEventListener('submit', handleAddFormSubmit);
 
 //* Слушатели для просмотра
 viewerPopupCloseButton.addEventListener('click', () => closePopup(viewerPopup))
+
+//* Слушатели для всех попапов
+document.querySelectorAll('.popup').forEach((item) => {
+   item.addEventListener('click', (evt)=> {
+      handleClickOverlay(evt)
+   })
+})
+
 
 createInitialCards()
