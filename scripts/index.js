@@ -90,8 +90,7 @@ function handleAddFormSubmit(evt) {
    evt.preventDefault();
    addCard(cardPlace, newCardTitle.value, newCardLink.value)
    closePopup(addPopup)
-   newCardTitle.value = ''
-   newCardLink.value = ''
+   addFormElement.reset()
 }
 
 //* удалить карточку
