@@ -2,6 +2,7 @@
 const editPopup = document.querySelector('#edit-popup')
 const addPopup = document.querySelector('#add-popup')
 const viewerPopup = document.querySelector('#viewer-popup')
+const popups = document.querySelectorAll('.popup')
 
 //* Поля формы редактирования
 const inputName = document.querySelector('.popup__input_el_name')
@@ -137,12 +138,19 @@ addFormElement.addEventListener('submit', handleAddFormSubmit);
 //* Слушатели для просмотра
 viewerPopupCloseButton.addEventListener('click', () => closePopup(viewerPopup))
 
-//* Слушатели для всех попапов
-document.querySelectorAll('.popup').forEach((item) => {
+//* Слушатели для закрытия по клику на оверлей
+popups.forEach((item) => {
    item.addEventListener('click', (evt)=> {
       handleClickOverlay(evt)
    })
 })
 
-
+//* Слушатели для закрытия по кнопке escape
+popups.forEach((item) => {
+   item.addEventListener('keydown', evt => {
+      if (evt.code === 'Escape') {
+         closePopup(evt.currentTarget)
+      }
+   })
+})
 createInitialCards()
