@@ -68,14 +68,24 @@ function createInitialCards() {
    })
 }
 
+//* Ожидание кнопки esc для закрытия попапа
+function handlerEsc(evt) {
+   const currentActivePopup = document.querySelector('.popup_opened')
+   if (evt.key === 'Escape') {
+      closePopup(currentActivePopup)
+   }
+}
+
 //* открыть попап
 function openPopup(el) {
    el.classList.add('popup_opened');
+   document.addEventListener('keydown', handlerEsc)
 }
 
 //* закрыть попап
 function closePopup(el) {
    el.classList.remove('popup_opened')
+   document.removeEventListener('keydown', handlerEsc)
 }
 
 //* Внести изменения
@@ -145,12 +155,4 @@ popups.forEach((item) => {
    })
 })
 
-//* Слушатели для закрытия по кнопке escape
-popups.forEach((item) => {
-   item.addEventListener('keydown', evt => {
-      if (evt.code === 'Escape') {
-         closePopup(evt.currentTarget)
-      }
-   })
-})
 createInitialCards()
