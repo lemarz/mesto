@@ -156,3 +156,8 @@ popups.forEach((item) => {
 })
 
 createInitialCards()
+
+const formInput = editPopup.querySelector('.popup__input_el_name')
+
+console.log(formInput.id)
+formInput.addEventListener('input',(evt) => console.log(evt.target.validity.valid) )
