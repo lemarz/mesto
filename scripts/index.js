@@ -135,13 +135,19 @@ const handleClickOverlay = (evt) => {
 editButton.addEventListener('click', () => {
    inputName.value = profileName.textContent;
    inputDescription.value = profileDescription.textContent;
+   isValid(editPopup.querySelector('.popup__form'))
    openPopup(editPopup)
 });
 editPopupCloseButton.addEventListener('click', () => closePopup(editPopup));
 editFormElement.addEventListener('submit', handleProfileFormSubmit);
 
 //* Слушатели для добавления карточки
-addButton.addEventListener('click', () => { openPopup(addPopup) });
+addButton.addEventListener('click', () => {
+   const addPopupForm = addPopup.querySelector('.popup__form')
+   isValid(addPopupForm)
+   addPopupForm.reset()
+   openPopup(addPopup)
+});
 addPopupCloseButton.addEventListener('click', () => closePopup(addPopup));
 addFormElement.addEventListener('submit', handleAddFormSubmit);
 
@@ -157,7 +163,25 @@ popups.forEach((item) => {
 
 createInitialCards()
 
-const formInput = editPopup.querySelector('.popup__input_el_name')
+//!---------------------------------------------
+const forms = document.querySelectorAll('.popup__form')
 
-console.log(formInput.id)
-formInput.addEventListener('input',(evt) => console.log(evt.target.validity.valid) )
+forms.forEach((item) => {
+   item.addEventListener('input', handlerInputForm)
+})
+
+
+function handlerInputForm(evt){
+   const currentForm = evt.currentTarget
+   isValid(currentForm) // проверяет на валидность форму, на которую навесили слушатель
+}
+
+function isValid(form) {
+   const saveButton = form.querySelector('.popup__save-button')
+
+   if (form.checkValidity()) {
+      saveButton.classList.remove('popup__save-button_disabled')
+   } else {
+      saveButton.classList.add('popup__save-button_disabled')
+   }
+}
