@@ -3,24 +3,17 @@ const parameters = {
    formInput: '.popup__input',
    buttonElement: '.popup__save-button',
    buttonElementDisabled: 'popup__save-button_disabled',
-   inputErrorClass: 'popup__input-error',
 }
-const {formElement, formInput, buttonElement,buttonElementDisabled, inputErrorClass} = parameters
+const {formElement, formInput, buttonElement, buttonElementDisabled} = parameters
 
-const showInputError = (errorElement) => {
-   errorElement.classList.add(inputErrorClass);
-}
 
 const hideInputError = (errorElement) =>{
-   errorElement.classList.remove(inputErrorClass);
    errorElement.textContent = ''}
 
 function validateInput(input) {
    const errorElement = input.parentNode.querySelector(`.${input.id}-error`)
    errorElement.textContent = input.validationMessage
-   if (!input.validity.valid) {
-      showInputError(errorElement)
-   } else {
+   if (input.validity.valid) {
       hideInputError(errorElement)
    }
 }
@@ -30,7 +23,7 @@ function setEventListeners(form) {
    inputList.forEach(function(input){
       input.addEventListener('input',function(){
          validateInput(input)
-         isValid(form)
+         isButtonValid(form)
       })
    })
 }
@@ -48,7 +41,7 @@ function enableValidation() {
 
 
 
-function isValid(form) {
+function isButtonValid(form) {
    const saveButton = form.querySelector(buttonElement)
    if (form.checkValidity()) {
       saveButton.classList.remove(buttonElementDisabled)
