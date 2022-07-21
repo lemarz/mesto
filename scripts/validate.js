@@ -42,14 +42,27 @@ function enableValidation() {
 
 
 function isButtonValid(form) {
-   const saveButton = form.querySelector(buttonElement)
+   const currentSaveButton = form.querySelector(buttonElement)
    if (form.checkValidity()) {
-      saveButton.classList.remove(buttonElementDisabled)
+      currentSaveButton.classList.remove(buttonElementDisabled)
    } else {
-      saveButton.classList.add(buttonElementDisabled)
+      currentSaveButton.classList.add(buttonElementDisabled)
    }
 }
 
+//сбрасывает валидацию инпутов при открытии
+function resetValidation(el){
+   const popupEditInputs = el.querySelectorAll('.popup__input')
+   popupEditInputs.forEach((item)=> {
+      validateInput(item)
+   })
+}
+
+function resetButtonValidity(el){
+   const form = el.querySelector('.popup__form')
+   isButtonValid(form)
+
+}
 
 enableValidation(parameters);
 

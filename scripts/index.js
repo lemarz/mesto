@@ -80,6 +80,8 @@ function handlerEsc(evt) {
 function openPopup(el) {
    el.classList.add('popup_opened');
    document.addEventListener('keydown', handlerEsc)
+   resetValidation(el)
+   resetButtonValidity(el)
 }
 
 //* закрыть попап
