@@ -6,8 +6,5 @@
    font-weight: normal;
    font-size: 14px;
    line-height: 17px;
-}
-
-.popup__input:first-of-type {
-   margin-bottom: 30px;
+   margin-bottom: 5px;
 }
