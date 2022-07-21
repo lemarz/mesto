@@ -1,7 +1,7 @@
 //* Попапы
-const editPopup = document.querySelector('#edit-popup')
-const addPopup = document.querySelector('#add-popup')
-const viewerPopup = document.querySelector('#viewer-popup')
+const popupEdit = document.querySelector('#edit-popup')
+const popupAdd = document.querySelector('#add-popup')
+const popupViewer = document.querySelector('#viewer-popup')
 const popups = document.querySelectorAll('.popup')
 
 //* Поля формы редактирования
@@ -12,29 +12,29 @@ const profileName = document.querySelector('.profile__name')
 const profileDescription = document.querySelector('.profile__description')
 
 //* Кнопки открытия попапа
-const editButton = document.querySelector('.profile__edit-button')
-const addButton = document.querySelector('.profile__add-button')
+const buttonEdit = document.querySelector('.profile__edit-button')
+const buttonAdd = document.querySelector('.profile__add-button')
 
 //* Кнопки закрытия попапа
-const editPopupCloseButton = editPopup.querySelector('.popup__close-button')
-const addPopupCloseButton = addPopup.querySelector('.popup__close-button')
-const viewerPopupCloseButton = viewerPopup.querySelector('.popup__close-button')
+const buttonClosePopupEdit = popupEdit.querySelector('.popup__close-button')
+const buttonClosePopupAdd = popupAdd.querySelector('.popup__close-button')
+const buttonClosePopupViewer = popupViewer.querySelector('.popup__close-button')
 
 //* Субмиты
-const editFormElement = editPopup.querySelector('.popup__form')
-const addFormElement = addPopup.querySelector('.popup__form')
+const formElementPopupEdit = popupEdit.querySelector('.popup__form')
+const formElementPopupAdd = popupAdd.querySelector('.popup__form')
 
 //* Для рендера карточек
-const templateCard = document.querySelector('#card').content
+const cardTemplate = document.querySelector('#card').content
 const cardPlace = document.querySelector('.elements')
 
 //* Поля создания новой карточки
-const newCardTitle = addPopup.querySelector('.popup__input_el_title')
-const newCardLink = addPopup.querySelector('.popup__input_el_link')
+const newCardTitle = popupAdd.querySelector('.popup__input_el_title')
+const newCardLink = popupAdd.querySelector('.popup__input_el_link')
 
-//* Источники во viewerPopup
-const imgTitle = viewerPopup.querySelector('.popup__viewer-title')
-const imgLink = viewerPopup.querySelector('.popup__viewer-image')
+//* Источники в popupViewer
+const imgTitle = popupViewer.querySelector('.popup__viewer-title')
+const imgLink = popupViewer.querySelector('.popup__viewer-image')
 
 //!__________
 
@@ -45,7 +45,7 @@ function addCard(place, title, link) {
 
 //* зарендорить карточку
 function renderCard(title, link) {
-   const newCard = templateCard.querySelector('.element').cloneNode(true)
+   const newCard = cardTemplate.querySelector('.element').cloneNode(true)
    newCard.querySelector('.element__title').textContent = title
    newCard.querySelector('.element__image').alt = title
    newCard.querySelector('.element__image').src = link
@@ -56,7 +56,7 @@ function renderCard(title, link) {
 
    deleteButton.addEventListener('click', handleDelete)
    likeButton.addEventListener('click', handleLike)
-   imageButton.addEventListener('click', viewerFunction)
+   imageButton.addEventListener('click', viewCard)
 
    return newCard
 }
@@ -70,8 +70,8 @@ function createInitialCards() {
 
 //* Ожидание кнопки esc для закрытия попапа
 function handlerEsc(evt) {
-   const currentActivePopup = document.querySelector('.popup_opened')
    if (evt.key === 'Escape') {
+      const currentActivePopup = document.querySelector('.popup_opened')
       closePopup(currentActivePopup)
    }
 }
@@ -93,15 +93,15 @@ function handleProfileFormSubmit(evt) {
    evt.preventDefault();
    profileName.textContent = inputName.value
    profileDescription.textContent = inputDescription.value
-   closePopup(editPopup)
+   closePopup(popupEdit)
 }
 
 //*  Добавить новую карточку пользователя
 function handleAddFormSubmit(evt) {
    evt.preventDefault();
    addCard(cardPlace, newCardTitle.value, newCardLink.value)
-   closePopup(addPopup)
-   addFormElement.reset()
+   closePopup(popupAdd)
+   formElementPopupAdd.reset()
 }
 
 //* удалить карточку
@@ -115,11 +115,11 @@ function handleLike(evt) {
 }
 
 //* Открыть нужную карточку во viewer
-function viewerFunction(evt) {
+function viewCard(evt) {
    imgLink.src = evt.target.src
    imgLink.alt = evt.target.alt
    imgTitle.textContent = evt.target.alt
-   openPopup(viewerPopup)
+   openPopup(popupViewer)
 }
 
 //* Закрытие попапа по клику на оверлей
@@ -132,25 +132,25 @@ const handleClickOverlay = (evt) => {
 //!__________
 
 //* Слушатели для редактирования профиля
-editButton.addEventListener('click', () => {
+buttonEdit.addEventListener('click', () => {
    inputName.value = profileName.textContent;
    inputDescription.value = profileDescription.textContent;
-   openPopup(editPopup)
+   openPopup(popupEdit)
 });
-editPopupCloseButton.addEventListener('click', () => closePopup(editPopup));
-editFormElement.addEventListener('submit', handleProfileFormSubmit);
+buttonClosePopupEdit.addEventListener('click', () => closePopup(popupEdit));
+formElementPopupEdit.addEventListener('submit', handleProfileFormSubmit);
 
 //* Слушатели для добавления карточки
-addButton.addEventListener('click', () => {
-   const addPopupForm = addPopup.querySelector('.popup__form')
+buttonAdd.addEventListener('click', () => {
+   const addPopupForm = popupAdd.querySelector('.popup__form')
    addPopupForm.reset()
-   openPopup(addPopup)
+   openPopup(popupAdd)
 });
-addPopupCloseButton.addEventListener('click', () => closePopup(addPopup));
-addFormElement.addEventListener('submit', handleAddFormSubmit);
+buttonClosePopupAdd.addEventListener('click', () => closePopup(popupAdd));
+formElementPopupAdd.addEventListener('submit', handleAddFormSubmit);
 
 //* Слушатели для просмотра
-viewerPopupCloseButton.addEventListener('click', () => closePopup(viewerPopup))
+buttonClosePopupViewer.addEventListener('click', () => closePopup(popupViewer))
 
 //* Слушатели для закрытия по клику на оверлей
 popups.forEach((item) => {
