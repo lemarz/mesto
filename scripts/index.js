@@ -135,7 +135,6 @@ const handleClickOverlay = (evt) => {
 editButton.addEventListener('click', () => {
    inputName.value = profileName.textContent;
    inputDescription.value = profileDescription.textContent;
-   isValid(editPopup.querySelector('.popup__form'))
    openPopup(editPopup)
 });
 editPopupCloseButton.addEventListener('click', () => closePopup(editPopup));
@@ -144,7 +143,6 @@ editFormElement.addEventListener('submit', handleProfileFormSubmit);
 //* Слушатели для добавления карточки
 addButton.addEventListener('click', () => {
    const addPopupForm = addPopup.querySelector('.popup__form')
-   isValid(addPopupForm)
    addPopupForm.reset()
    openPopup(addPopup)
 });
@@ -162,26 +160,3 @@ popups.forEach((item) => {
 })
 
 createInitialCards()
-
-//!---------------------------------------------
-const forms = document.querySelectorAll('.popup__form')
-
-forms.forEach((item) => {
-   item.addEventListener('input', handlerInputForm)
-})
-
-
-function handlerInputForm(evt){
-   const currentForm = evt.currentTarget
-   isValid(currentForm) // проверяет на валидность форму, на которую навесили слушатель
-}
-
-function isValid(form) {
-   const saveButton = form.querySelector('.popup__save-button')
-
-   if (form.checkValidity()) {
-      saveButton.classList.remove('popup__save-button_disabled')
-   } else {
-      saveButton.classList.add('popup__save-button_disabled')
-   }
-}
