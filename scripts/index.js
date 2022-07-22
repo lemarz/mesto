@@ -80,8 +80,6 @@ function handlerEsc(evt) {
 function openPopup(el) {
    el.classList.add('popup_opened');
    document.addEventListener('keydown', handlerEsc)
-   resetValidation(el)
-   resetButtonValidity(el)
 }
 
 //* закрыть попап
@@ -137,6 +135,8 @@ const handleClickOverlay = (evt) => {
 buttonEdit.addEventListener('click', () => {
    inputName.value = profileName.textContent;
    inputDescription.value = profileDescription.textContent;
+   resetFormValidityMessage(popupEdit)
+   resetButtonValidity(popupEdit)
    openPopup(popupEdit)
 });
 buttonClosePopupEdit.addEventListener('click', () => closePopup(popupEdit));
@@ -146,6 +146,8 @@ formElementPopupEdit.addEventListener('submit', handleProfileFormSubmit);
 buttonAdd.addEventListener('click', () => {
    const addPopupForm = popupAdd.querySelector('.popup__form')
    addPopupForm.reset()
+   resetFormValidityMessage(popupAdd)
+   resetButtonValidity(popupAdd)
    openPopup(popupAdd)
 });
 buttonClosePopupAdd.addEventListener('click', () => closePopup(popupAdd));

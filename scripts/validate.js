@@ -50,18 +50,19 @@ function isButtonValid(form) {
    }
 }
 
-//сбрасывает валидацию инпутов при открытии
-function resetValidation(el){
-   const popupEditInputs = el.querySelectorAll('.popup__input')
-   popupEditInputs.forEach((item)=> {
-      validateInput(item)
-   })
-}
 
 function resetButtonValidity(el){
    const form = el.querySelector('.popup__form')
    isButtonValid(form)
+}
 
+// Сброс сообщений об ошибке для инпутов
+function resetFormValidityMessage(popup){
+   const inputs = popup.querySelectorAll('.popup__input')
+   inputs.forEach((input) => {
+      const errorElement = input.parentNode.querySelector(`.${input.id}-error`)
+      errorElement.textContent = ''
+   })
 }
 
 enableValidation(parameters);
