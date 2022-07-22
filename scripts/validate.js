@@ -50,15 +50,15 @@ function isButtonValid(form) {
    }
 }
 
-
+// Валидирует кнопку в форме
 function resetButtonValidity(el){
-   const form = el.querySelector('.popup__form')
+   const form = el.querySelector(formElement)
    isButtonValid(form)
 }
 
 // Сброс сообщений об ошибке для инпутов
 function resetFormValidityMessage(popup){
-   const inputs = popup.querySelectorAll('.popup__input')
+   const inputs = popup.querySelectorAll(formInput)
    inputs.forEach((input) => {
       const errorElement = input.parentNode.querySelector(`.${input.id}-error`)
       errorElement.textContent = ''
