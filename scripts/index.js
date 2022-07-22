@@ -159,7 +159,7 @@ buttonClosePopupViewer.addEventListener('click', () => closePopup(popupViewer))
 
 //* Слушатели для закрытия по клику на оверлей
 popups.forEach((item) => {
-   item.addEventListener('click', (evt)=> {
+   item.addEventListener('mousedown', (evt)=> {
       handleClickOverlay(evt)
    })
 })
