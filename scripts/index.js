@@ -46,9 +46,10 @@ function addCard(place, title, link) {
 //* зарендорить карточку
 function renderCard(title, link) {
    const newCard = cardTemplate.querySelector('.element').cloneNode(true)
+   const imageElement = newCard.querySelector('.element__image')
    newCard.querySelector('.element__title').textContent = title
-   newCard.querySelector('.element__image').alt = title
-   newCard.querySelector('.element__image').src = link
+   imageElement.alt = title
+   imageElement.src = link
 
    const deleteButton = newCard.querySelector('.element__delete-button')
    const likeButton = newCard.querySelector('.element__like-button')
