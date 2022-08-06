@@ -25,8 +25,8 @@ const formElementPopupEdit = popupEdit.querySelector('.popup__form')
 const formElementPopupAdd = popupAdd.querySelector('.popup__form')
 
 //* Для рендера карточек
-const cardTemplate = document.querySelector('#card').content
-const cardPlace = document.querySelector('.elements')
+const cardTemplate = '#card'
+const cardPlace = '.elements'
 
 //* Поля создания новой карточки
 const newCardTitle = popupAdd.querySelector('.popup__input_el_title')
@@ -38,36 +38,7 @@ const imgLink = popupViewer.querySelector('.popup__viewer-image')
 
 //!__________
 
-//* добавить зарендаренную карточку
-function addCard(place, title, link) {
-   place.prepend(renderCard(title, link))
-}
 
-//* зарендорить карточку
-function renderCard(title, link) {
-   const newCard = cardTemplate.querySelector('.element').cloneNode(true)
-   const imageElement = newCard.querySelector('.element__image')
-   newCard.querySelector('.element__title').textContent = title
-   imageElement.alt = title
-   imageElement.src = link
-
-   const deleteButton = newCard.querySelector('.element__delete-button')
-   const likeButton = newCard.querySelector('.element__like-button')
-   const imageButton = newCard.querySelector('.element__image')
-
-   deleteButton.addEventListener('click', handleDelete)
-   likeButton.addEventListener('click', handleLike)
-   imageButton.addEventListener('click', viewCard)
-
-   return newCard
-}
-
-//* добавить карточки "из коробки"
-function createInitialCards() {
-   initialCards.forEach((item) => {
-      addCard(cardPlace, item.name, item.link)
-   })
-}
 
 //* Ожидание кнопки esc для закрытия попапа
 function handlerEsc(evt) {
@@ -100,27 +71,12 @@ function handleProfileFormSubmit(evt) {
 //*  Добавить новую карточку пользователя
 function handleAddFormSubmit(evt) {
    evt.preventDefault();
-   addCard(cardPlace, newCardTitle.value, newCardLink.value)
+   addCard({
+      name: newCardTitle.value,
+      link: newCardLink.value
+   })
    closePopup(popupAdd)
    formElementPopupAdd.reset()
-}
-
-//* удалить карточку
-function handleDelete(evt) {
-   evt.target.closest('.element').remove()
-}
-
-//* like/dislike
-function handleLike(evt) {
-   evt.target.classList.toggle('element__like-button_active')
-}
-
-//* Открыть нужную карточку во viewer
-function viewCard(evt) {
-   imgLink.src = evt.target.src
-   imgLink.alt = evt.target.alt
-   imgTitle.textContent = evt.target.alt
-   openPopup(popupViewer)
 }
 
 //* Закрытие попапа по клику на оверлей
@@ -163,5 +119,3 @@ popups.forEach((item) => {
       handleClickOverlay(evt)
    })
 })
-
-createInitialCards()
