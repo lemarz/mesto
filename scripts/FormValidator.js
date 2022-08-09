@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
    constructor(parameters, formName) {
       this._formElementSelector = parameters.formElement
       this._formInputSelector = parameters.formInput
@@ -26,7 +26,7 @@ class FormValidator {
    // * 3. Валидация инпута
    _validateInput(evtFromInputField){
       this._inputField = evtFromInputField.target
-      this._errorField = this._inputField.parentNode.querySelector(`.${evtFromInputField.target.id}-error`) //todo
+      this._errorField = this._inputField.parentNode.querySelector(`.${evtFromInputField.target.id}-error`)
       this._errorField.textContent = this._inputField.validationMessage
       if (this._inputField.validity.valid) {
          this._hideInputError(this._errorField)
