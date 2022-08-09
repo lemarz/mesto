@@ -1,3 +1,6 @@
+import {initialCards} from "./initial-сards.js";
+import Card from "./card.js";
+
 //* Попапы
 const popupEdit = document.querySelector('#edit-popup')
 const popupAdd = document.querySelector('#add-popup')
@@ -32,9 +35,7 @@ const cardPlace = '.elements'
 const newCardTitle = popupAdd.querySelector('.popup__input_el_title')
 const newCardLink = popupAdd.querySelector('.popup__input_el_link')
 
-//* Источники в popupViewer
-const imgTitle = popupViewer.querySelector('.popup__viewer-title')
-const imgLink = popupViewer.querySelector('.popup__viewer-image')
+
 
 //!__________
 
@@ -49,7 +50,7 @@ function handlerEsc(evt) {
 }
 
 //* открыть попап
-function openPopup(el) {
+export function openPopup(el) {
    el.classList.add('popup_opened');
    document.addEventListener('keydown', handlerEsc)
 }
@@ -71,10 +72,12 @@ function handleProfileFormSubmit(evt) {
 //*  Добавить новую карточку пользователя
 function handleAddFormSubmit(evt) {
    evt.preventDefault();
-   addCard({
+   const cardData = {
       name: newCardTitle.value,
       link: newCardLink.value
-   })
+   }
+   const card = new Card(cardData,cardTemplate)
+   card.renderCard(cardPlace)
    closePopup(popupAdd)
    formElementPopupAdd.reset()
 }
@@ -92,8 +95,8 @@ const handleClickOverlay = (evt) => {
 buttonEdit.addEventListener('click', () => {
    inputName.value = profileName.textContent;
    inputDescription.value = profileDescription.textContent;
-   resetFormValidityMessage(popupEdit)
-   resetButtonValidity(popupEdit)
+   //! resetFormValidityMessage(popupEdit)
+   //! resetButtonValidity(popupEdit)
    openPopup(popupEdit)
 });
 buttonClosePopupEdit.addEventListener('click', () => closePopup(popupEdit));
@@ -103,8 +106,8 @@ formElementPopupEdit.addEventListener('submit', handleProfileFormSubmit);
 buttonAdd.addEventListener('click', () => {
    const addPopupForm = popupAdd.querySelector('.popup__form')
    addPopupForm.reset()
-   resetFormValidityMessage(popupAdd)
-   resetButtonValidity(popupAdd)
+   //! resetFormValidityMessage(popupAdd)
+   //! resetButtonValidity(popupAdd)
    openPopup(popupAdd)
 });
 buttonClosePopupAdd.addEventListener('click', () => closePopup(popupAdd));
@@ -118,4 +121,11 @@ popups.forEach((item) => {
    item.addEventListener('mousedown', (evt)=> {
       handleClickOverlay(evt)
    })
+})
+
+
+// * Рендер начальных карточек
+initialCards.forEach(item => {
+   const card = new Card(item,cardTemplate)
+   card.renderCard(cardPlace)
 })

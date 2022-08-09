@@ -1,4 +1,11 @@
-class Card {
+import {openPopup} from "./index.js";
+
+// * popupViewer и источники
+const popupViewer = document.querySelector('#viewer-popup')
+const imgTitle = popupViewer.querySelector('.popup__viewer-title')
+const imgLink = popupViewer.querySelector('.popup__viewer-image')
+
+export default class Card {
    constructor(data, templateSelector) {
       this._titile = data.name
       this._link = data.link
@@ -60,16 +67,9 @@ class Card {
 
 }
 
-const addCard = item => {
-   const card = new Card(item,cardTemplate)
-   card.renderCard(cardPlace)
-}
 
 
-//! Вызываем рендер
-initialCards.forEach(item => {
-   addCard(item)
-})
+
 
 
 
