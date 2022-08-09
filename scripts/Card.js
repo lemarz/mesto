@@ -40,17 +40,18 @@ export default class Card {
    }
 
    renderCard(cardPlace){
-      this._newCard = this._getTemplate()
+      document.querySelector(cardPlace).prepend(this._createCard())
+   }
 
+   _createCard(){
+      this._newCard = this._getTemplate()
       // Определения граф с информацией
       this._newCard._imageElement = this._newCard.querySelector('.element__image')
       this._newCard._textElement = this._newCard.querySelector('.element__title')
-
       // Заполнение граф данными информацией из объекта
       this._newCard._textElement.textContent = this._titile
       this._newCard._imageElement.alt = this._titile
       this._newCard._imageElement.src = this._link
-
       // Определение кнопок на карточке
       this._newCard._deleteButton = this._newCard.querySelector('.element__delete-button')
       this._newCard._likeButton = this._newCard.querySelector('.element__like-button')
@@ -58,9 +59,8 @@ export default class Card {
 
       this._addEventListeners()
 
-      document.querySelector(cardPlace).prepend(this._newCard)
+      return this._newCard
    }
-
 
 }
 
