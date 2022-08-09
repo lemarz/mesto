@@ -39,11 +39,15 @@ export default class FormValidator {
 
    // * 4. Валидация кнопки Submit
    isButtonValid(){
+      this._buttonSubmit = this._form.querySelector(this._buttonElementSelector)
       if (!this._form.checkValidity()){
-         this._form.querySelector(this._buttonElementSelector).classList.add(this._buttonElementDisabledSelector)
+         this._buttonSubmit.classList.add(this._buttonElementDisabledSelector)
+         this._buttonSubmit.disabled = true
       } else {
-         this._form.querySelector(this._buttonElementSelector).classList.remove(this._buttonElementDisabledSelector)
+         this._buttonSubmit.classList.remove(this._buttonElementDisabledSelector)
+         this._buttonSubmit.disabled = false
       }
+      this._buttonSubmit = null
    }
 
    resetFormValidityMessage(){
