@@ -1,5 +1,5 @@
 import {initialCards} from "./initial-сards.js";
-
+import {openPopup,closePopup} from "./utils.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
@@ -44,7 +44,6 @@ const parameters = {
    buttonElement: '.popup__save-button',
    buttonElementDisabled: 'popup__save-button_disabled',
 }
-const {formElement, formInput, buttonElement, buttonElementDisabled} = parameters
 
 
 // * Валидаторы и их включение
@@ -59,25 +58,7 @@ popupEditValidator.enableValidation()
 
 
 
-// * Ожидание кнопки esc для закрытия попапа
-function handlerEsc(evt) {
-   if (evt.key === 'Escape') {
-      const currentActivePopup = document.querySelector('.popup_opened')
-      closePopup(currentActivePopup)
-   }
-}
 
-// * открыть попап
-export function openPopup(el) {
-   el.classList.add('popup_opened');
-   document.addEventListener('keydown', handlerEsc)
-}
-
-// * закрыть попап
-function closePopup(el) {
-   el.classList.remove('popup_opened')
-   document.removeEventListener('keydown', handlerEsc)
-}
 
 // * Внести изменения
 function handleProfileFormSubmit(evt) {

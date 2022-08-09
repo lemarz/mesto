@@ -1,9 +1,5 @@
-import {openPopup} from "./index.js";
-
 // * popupViewer и источники
-const popupViewer = document.querySelector('#viewer-popup')
-const imgTitle = popupViewer.querySelector('.popup__viewer-title')
-const imgLink = popupViewer.querySelector('.popup__viewer-image')
+import {popupViewer,imgLink,imgTitle,openPopup} from "./utils.js";
 
 export default class Card {
    constructor(data, templateSelector) {
@@ -23,6 +19,7 @@ export default class Card {
 
    _handleRemoveCard = () => {
       this._newCard.remove()
+      this._newCard = null
    }
 
    _handleLike = () => {
