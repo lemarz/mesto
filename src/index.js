@@ -4,6 +4,7 @@ import {initialCards} from "./initial-сards.js";
 import {openPopup,closePopup} from "./utils.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Section from "./Section.js";
 
 // * Попапы
 const popupEdit = document.querySelector('#edit-popup')
@@ -58,7 +59,18 @@ popupEditValidator.enableValidation()
 
 //!__________
 
+const renderer = (item) => {
+   const card = new Card(item,cardTemplate)
+   const newCard = card._createCard()
+   section.addItem(newCard)
+}
 
+// * Экземпляр класса Section
+const section = new Section({
+   items: initialCards,
+   renderer: renderer
+},
+   cardPlace)
 
 
 
@@ -77,8 +89,7 @@ function handleAddFormSubmit(evt) {
       name: newCardTitle.value,
       link: newCardLink.value
    }
-   const card = new Card(cardData,cardTemplate)
-   card.renderCard(cardPlace)
+   renderer(cardData)
    closePopup(popupAdd)
    formElementPopupAdd.reset()
 }
@@ -126,7 +137,4 @@ popups.forEach((item) => {
 
 
 // * Рендер начальных карточек
-initialCards.forEach(item => {
-   const card = new Card(item,cardTemplate)
-   card.renderCard(cardPlace)
-})
+section.initRender()
