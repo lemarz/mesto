@@ -1,4 +1,6 @@
 export default class FormValidator {
+   q
+
    constructor(parameters, formName) {
       this._formElementSelector = parameters.formElement
       this._formInputSelector = parameters.formInput
@@ -11,7 +13,7 @@ export default class FormValidator {
       this._inputsList = Array.from(this._form.querySelectorAll(this._formInputSelector))
    }
 
-   _setEventListeners(){
+   _setEventListeners() {
       // * 2. Навесить слушатели на инпуты
       this._inputsList.forEach(item => {
          item.addEventListener('input', evt => {
@@ -24,7 +26,7 @@ export default class FormValidator {
    }
 
    // * 3. Валидация инпута
-   _validateInput(evtFromInputField){
+   _validateInput(evtFromInputField) {
       this._inputField = evtFromInputField.target
       this._errorField = this._inputField.parentNode.querySelector(`.${evtFromInputField.target.id}-error`)
       this._errorField.textContent = this._inputField.validationMessage
@@ -33,14 +35,14 @@ export default class FormValidator {
       }
    }
 
-   _hideInputError(){
+   _hideInputError() {
       this._errorField.textContent = ''
    }
 
    // * 4. Валидация кнопки Submit
-   isButtonValid(){
+   isButtonValid() {
       this._buttonSubmit = this._form.querySelector(this._buttonElementSelector)
-      if (!this._form.checkValidity()){
+      if (!this._form.checkValidity()) {
          this._buttonSubmit.classList.add(this._buttonElementDisabledSelector)
          this._buttonSubmit.disabled = true
       } else {
@@ -50,13 +52,13 @@ export default class FormValidator {
       this._buttonSubmit = null
    }
 
-   resetFormValidityMessage(){
+   resetFormValidityMessage() {
       this._inputsList.forEach((input) => {
          this._form.querySelector(`.${input.id}-error`).textContent = ''
       })
    }
-q
-   enableValidation(){
+
+   enableValidation() {
       // * 1. Отменить перезагрузки при сабмите
       this._form.addEventListener('submit', evt => evt.preventDefault())
 

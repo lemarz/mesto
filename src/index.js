@@ -1,7 +1,7 @@
 import './index.css';
 
 import {initialCards} from "./initial-сards.js";
-import {openPopup,closePopup} from "./utils.js";
+import {openPopup, closePopup} from "./utils.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
@@ -56,22 +56,20 @@ const popupEditValidator = new FormValidator(parameters, '[name = edit-popup_for
 popupEditValidator.enableValidation()
 
 
-
 //!__________
 
 const renderer = (item) => {
-   const card = new Card(item,cardTemplate)
+   const card = new Card(item, cardTemplate)
    const newCard = card._createCard()
    section.addItem(newCard)
 }
 
 // * Экземпляр класса Section
 const section = new Section({
-   items: initialCards,
-   renderer: renderer
-},
+      items: initialCards,
+      renderer: renderer
+   },
    cardPlace)
-
 
 
 // * Внести изменения
@@ -96,9 +94,10 @@ function handleAddFormSubmit(evt) {
 
 // * Закрытие попапа по клику на оверлей
 const handleClickOverlay = (evt) => {
-   if(evt.target === evt.currentTarget) {
+   if (evt.target === evt.currentTarget) {
       closePopup(evt.target);
-   }}
+   }
+}
 
 
 //!__________
@@ -130,7 +129,7 @@ buttonClosePopupViewer.addEventListener('click', () => closePopup(popupViewer))
 
 // * Слушатели для закрытия по клику на оверлей
 popups.forEach((item) => {
-   item.addEventListener('mousedown', (evt)=> {
+   item.addEventListener('mousedown', (evt) => {
       handleClickOverlay(evt)
    })
 })

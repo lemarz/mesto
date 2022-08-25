@@ -1,5 +1,5 @@
 // * popupViewer и источники
-import {popupViewer,imgLink,imgTitle,openPopup} from "./utils.js";
+import {popupViewer, imgLink, imgTitle, openPopup} from "./utils.js";
 
 export default class Card {
    constructor(data, templateSelector) {
@@ -8,14 +8,14 @@ export default class Card {
       this._templateSelector = templateSelector
    }
 
-  _getTemplate(){
+   _getTemplate() {
       //Копия темплейт разметки под карточку
-     return document
-        .querySelector(this._templateSelector)
-        .content
-        .querySelector('.element')
-        .cloneNode(true)
-  }
+      return document
+         .querySelector(this._templateSelector)
+         .content
+         .querySelector('.element')
+         .cloneNode(true)
+   }
 
    _handleRemoveCard = () => {
       this._newCard.remove()
@@ -33,17 +33,17 @@ export default class Card {
       openPopup(popupViewer)
    };
 
-   _addEventListeners(){
-      this._newCard._deleteButton.addEventListener('click',this._handleRemoveCard)
+   _addEventListeners() {
+      this._newCard._deleteButton.addEventListener('click', this._handleRemoveCard)
       this._newCard._likeButton.addEventListener('click', this._handleLike)
       this._newCard._imageButton.addEventListener('click', this._handleViewCard)
    }
 
-   renderCard(cardPlace){
+   renderCard(cardPlace) {
       document.querySelector(cardPlace).prepend(this._createCard())
    }
 
-   _createCard(){
+   _createCard() {
       this._newCard = this._getTemplate()
       // Определения граф с информацией
       this._newCard._imageElement = this._newCard.querySelector('.element__image')
@@ -55,7 +55,7 @@ export default class Card {
       // Определение кнопок на карточке
       this._newCard._deleteButton = this._newCard.querySelector('.element__delete-button')
       this._newCard._likeButton = this._newCard.querySelector('.element__like-button')
-      this._newCard. _imageButton = this._newCard.querySelector('.element__image')
+      this._newCard._imageButton = this._newCard.querySelector('.element__image')
 
       this._addEventListeners()
 
