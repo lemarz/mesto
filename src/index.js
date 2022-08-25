@@ -1,16 +1,15 @@
 import './index.css';
 
 import {initialCards} from "./initial-сards.js";
-import {openPopup, closePopup} from "./utils.js";
-import Card from "./Card.js";
+import {closePopup} from "./utils.js";
+import {handleSubmitEditForm, handleSubmitAddForm, renderer} from "./utils.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
+import PopupWithForm from "./PopupWithForm.js";
+
 
 // * Попапы
-const popupEdit = document.querySelector('#edit-popup')
-const popupAdd = document.querySelector('#add-popup')
 const popupViewer = document.querySelector('#viewer-popup')
-const popups = document.querySelectorAll('.popup')
 
 // * Поля формы редактирования
 const inputName = document.querySelector('.popup__input_el_name')
@@ -24,21 +23,8 @@ const buttonEdit = document.querySelector('.profile__edit-button')
 const buttonAdd = document.querySelector('.profile__add-button')
 
 // * Кнопки закрытия попапа
-const buttonClosePopupEdit = popupEdit.querySelector('.popup__close-button')
-const buttonClosePopupAdd = popupAdd.querySelector('.popup__close-button')
 const buttonClosePopupViewer = popupViewer.querySelector('.popup__close-button')
 
-// * Субмиты
-const formElementPopupEdit = popupEdit.querySelector('.popup__form')
-const formElementPopupAdd = popupAdd.querySelector('.popup__form')
-
-// * Для рендера карточек
-const cardTemplate = '#card'
-const cardPlace = '.elements'
-
-// * Поля создания новой карточки
-const newCardTitle = popupAdd.querySelector('.popup__input_el_title')
-const newCardLink = popupAdd.querySelector('.popup__input_el_link')
 
 // * Параметры для валидатора
 const parameters = {
@@ -58,47 +44,21 @@ popupEditValidator.enableValidation()
 
 //!__________
 
-const renderer = (item) => {
-   const card = new Card(item, cardTemplate)
-   const newCard = card._createCard()
-   section.addItem(newCard)
-}
-
 // * Экземпляр класса Section
 const section = new Section({
-      items: initialCards,
-      renderer: renderer
-   },
-   cardPlace)
+   items: initialCards,
+   renderer: renderer
+}, '.elements')
 
 
-// * Внести изменения
-function handleProfileFormSubmit(evt) {
-   evt.preventDefault();
-   profileName.textContent = inputName.value
-   profileDescription.textContent = inputDescription.value
-   closePopup(popupEdit)
-}
+// * Экземпляр для #edit-popup
+const popupEdit = new PopupWithForm('#edit-popup', handleSubmitEditForm)
+popupEdit.setEventListeners()
 
-// *  Добавить новую карточку пользователя
-function handleAddFormSubmit(evt) {
-   evt.preventDefault();
-   const cardData = {
-      name: newCardTitle.value,
-      link: newCardLink.value
-   }
-   renderer(cardData)
-   closePopup(popupAdd)
-   formElementPopupAdd.reset()
-}
 
-// * Закрытие попапа по клику на оверлей
-const handleClickOverlay = (evt) => {
-   if (evt.target === evt.currentTarget) {
-      closePopup(evt.target);
-   }
-}
-
+// * Экземпляр для #add-popup
+const popupAdd = new PopupWithForm('#add-popup', handleSubmitAddForm)
+popupAdd.setEventListeners()
 
 //!__________
 
@@ -108,31 +68,18 @@ buttonEdit.addEventListener('click', () => {
    inputDescription.value = profileDescription.textContent;
    popupEditValidator.resetFormValidityMessage()
    popupEditValidator.isButtonValid()
-   openPopup(popupEdit)
-});
-buttonClosePopupEdit.addEventListener('click', () => closePopup(popupEdit));
-formElementPopupEdit.addEventListener('submit', handleProfileFormSubmit);
+   popupEdit.openPopup()
+})
 
 // * Слушатели для добавления карточки
 buttonAdd.addEventListener('click', () => {
-   const addPopupForm = popupAdd.querySelector('.popup__form')
-   addPopupForm.reset()
    popupAddValidator.resetFormValidityMessage()
    popupAddValidator.isButtonValid()
-   openPopup(popupAdd)
-});
-buttonClosePopupAdd.addEventListener('click', () => closePopup(popupAdd));
-formElementPopupAdd.addEventListener('submit', handleAddFormSubmit);
+   popupAdd.openPopup()
+})
 
 // * Слушатели для просмотра
 buttonClosePopupViewer.addEventListener('click', () => closePopup(popupViewer))
-
-// * Слушатели для закрытия по клику на оверлей
-popups.forEach((item) => {
-   item.addEventListener('mousedown', (evt) => {
-      handleClickOverlay(evt)
-   })
-})
 
 
 // * Рендер начальных карточек
