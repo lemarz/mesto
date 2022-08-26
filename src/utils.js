@@ -1,35 +1,26 @@
-// * popupViewer и источники
-
 import Card from "./Card.js";
-
-const popupViewer = document.querySelector('#viewer-popup')
-const imgTitle = popupViewer.querySelector('.popup__viewer-title')
-const imgLink = popupViewer.querySelector('.popup__viewer-image')
+import PopupWithImage from "./PopupWithImage.js";
 
 
 // * Информация о профиле
 const profileName = document.querySelector('.profile__name')
 const profileDescription = document.querySelector('.profile__description')
 
-// * открыть попап
-function openPopup(el) {
-   el.classList.add('popup_opened');
-   // document.addEventListener('keydown', handlerEsc)
-}
 
-// * закрыть попап
-function closePopup(el) {
-   el.classList.remove('popup_opened')
-   // document.removeEventListener('keydown', handlerEsc)
+// * Коллбек для открытия карточки
+const handleCardClick = (item) => {
+   let popupView = new PopupWithImage('#viewer-popup')
+   popupView.setEventListeners()
+   popupView.openPopup(item)
+   popupView = null
 }
 
 // * Добавление карточек
 const renderer = (item) => {
-   let card = new Card(item, '#card')
+   let card = new Card(item, '#card', () => handleCardClick(item))
    card.renderCard('.elements')
    card = null
 }
-
 // * Обработчик формы редактирования профиля
 const handleSubmitEditForm = ({name, description}) => {
    profileName.textContent = name
@@ -45,6 +36,4 @@ const handleSubmitAddForm = ({title, link}) => {
    renderer(cardData)
 }
 
-
-export {popupViewer, imgTitle, imgLink, openPopup, closePopup}
 export {handleSubmitEditForm, handleSubmitAddForm, renderer}

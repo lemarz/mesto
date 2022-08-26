@@ -1,11 +1,9 @@
-// * popupViewer и источники
-import {popupViewer, imgLink, imgTitle, openPopup} from "./utils.js";
-
 export default class Card {
-   constructor(data, templateSelector) {
+   constructor(data, templateSelector, handleCardClick) {
       this._titile = data.name
       this._link = data.link
       this._templateSelector = templateSelector
+      this._handleCardClick = handleCardClick
    }
 
    _getTemplate() {
@@ -26,17 +24,11 @@ export default class Card {
       this._newCard._likeButton.classList.toggle('element__like-button_active')
    };
 
-   _handleViewCard = () => {
-      imgLink.src = this._newCard._imageElement.src
-      imgLink.alt = this._newCard._imageElement.alt
-      imgTitle.textContent = this._newCard._imageElement.alt
-      openPopup(popupViewer)
-   };
 
    _addEventListeners() {
       this._newCard._deleteButton.addEventListener('click', this._handleRemoveCard)
       this._newCard._likeButton.addEventListener('click', this._handleLike)
-      this._newCard._imageButton.addEventListener('click', this._handleViewCard)
+      this._newCard._imageButton.addEventListener('click', this._handleCardClick)
    }
 
    renderCard(cardPlace) {

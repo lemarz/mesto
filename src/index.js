@@ -1,15 +1,11 @@
 import './index.css';
 
 import {initialCards} from "./initial-сards.js";
-import {closePopup} from "./utils.js";
 import {handleSubmitEditForm, handleSubmitAddForm, renderer} from "./utils.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 import PopupWithForm from "./PopupWithForm.js";
 
-
-// * Попапы
-const popupViewer = document.querySelector('#viewer-popup')
 
 // * Поля формы редактирования
 const inputName = document.querySelector('.popup__input_el_name')
@@ -21,9 +17,6 @@ const profileDescription = document.querySelector('.profile__description')
 // * Кнопки открытия попапа
 const buttonEdit = document.querySelector('.profile__edit-button')
 const buttonAdd = document.querySelector('.profile__add-button')
-
-// * Кнопки закрытия попапа
-const buttonClosePopupViewer = popupViewer.querySelector('.popup__close-button')
 
 
 // * Параметры для валидатора
@@ -77,9 +70,6 @@ buttonAdd.addEventListener('click', () => {
    popupAddValidator.isButtonValid()
    popupAdd.openPopup()
 })
-
-// * Слушатели для просмотра
-buttonClosePopupViewer.addEventListener('click', () => closePopup(popupViewer))
 
 
 // * Рендер начальных карточек
