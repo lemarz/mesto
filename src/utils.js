@@ -1,10 +1,6 @@
 import Card from "./Card.js";
 import PopupWithImage from "./PopupWithImage.js";
-
-
-// * Информация о профиле
-const profileName = document.querySelector('.profile__name')
-const profileDescription = document.querySelector('.profile__description')
+import UserInfo from "./UserInfo";
 
 
 // * Коллбек для открытия карточки
@@ -23,8 +19,12 @@ const renderer = (item) => {
 }
 // * Обработчик формы редактирования профиля
 const handleSubmitEditForm = ({name, description}) => {
-   profileName.textContent = name
-   profileDescription.textContent = description
+   let userInfo = new UserInfo({
+      profileNameSelector: '.profile__name',
+      profileDescriptionSelector: '.profile__description'
+   })
+   userInfo.setUserInfo({name, description})
+   userInfo = null
 }
 
 // * Обработчик формы добавления карточки

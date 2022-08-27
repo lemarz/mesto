@@ -5,14 +5,12 @@ import {handleSubmitEditForm, handleSubmitAddForm, renderer} from "./utils.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 import PopupWithForm from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
 
 
 // * Поля формы редактирования
 const inputName = document.querySelector('.popup__input_el_name')
 const inputDescription = document.querySelector('.popup__input_el_description')
-// * Информация о профиле
-const profileName = document.querySelector('.profile__name')
-const profileDescription = document.querySelector('.profile__description')
 
 // * Кнопки открытия попапа
 const buttonEdit = document.querySelector('.profile__edit-button')
@@ -57,8 +55,14 @@ popupAdd.setEventListeners()
 
 // * Слушатели для редактирования профиля
 buttonEdit.addEventListener('click', () => {
-   inputName.value = profileName.textContent;
-   inputDescription.value = profileDescription.textContent;
+   let userInfo = new UserInfo({
+      profileNameSelector: '.profile__name',
+      profileDescriptionSelector: '.profile__description'
+   })
+   const data = userInfo.getUserInfo()
+   inputName.value = data.name
+   inputDescription.value = data.description
+   userInfo = null
    popupEditValidator.resetFormValidityMessage()
    popupEditValidator.isButtonValid()
    popupEdit.openPopup()
