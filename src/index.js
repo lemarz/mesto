@@ -1,11 +1,13 @@
 import './index.css';
 
 import {initialCards} from "./initial-сards.js";
-import {handleSubmitEditForm, handleSubmitAddForm, renderer} from "./utils.js";
+import {handleSubmitEditForm, handleSubmitAddForm} from "./utils.js";
 import FormValidator from "./FormValidator.js";
 import Section from "./Section.js";
 import PopupWithForm from "./PopupWithForm.js";
 import UserInfo from "./UserInfo.js";
+import PopupWithImage from "./PopupWithImage.js";
+import Card from "./Card.js";
 
 
 // * Поля формы редактирования
@@ -35,10 +37,25 @@ popupEditValidator.enableValidation()
 
 //!__________
 
+const popupView = new PopupWithImage('#viewer-popup')
+
+// * Коллбек для открытия карточки
+const handleCardClick = (item) => {
+   popupView.setEventListeners()
+   popupView.openPopup(item)
+}
+
+// * Добавление карточек
+const renderCard = (item) => {
+   const card = new Card(item, '#card', () => handleCardClick(item))
+   const cardEl = card.createCard()
+   cardsContainer.addItem(cardEl)
+}
+
 // * Экземпляр класса Section
-const section = new Section({
+const cardsContainer = new Section({
    items: initialCards,
-   renderer: renderer
+   renderer: renderCard
 }, '.elements')
 
 
@@ -52,29 +69,31 @@ const popupAdd = new PopupWithForm('#add-popup', handleSubmitAddForm)
 popupAdd.setEventListeners()
 
 //!__________
+// * Экземпляр для редактирования профиля
+const userInfo = new UserInfo({
+   profileNameSelector: '.profile__name',
+   profileDescriptionSelector: '.profile__description'
+})
 
 // * Слушатели для редактирования профиля
 buttonEdit.addEventListener('click', () => {
-   let userInfo = new UserInfo({
-      profileNameSelector: '.profile__name',
-      profileDescriptionSelector: '.profile__description'
-   })
    const data = userInfo.getUserInfo()
    inputName.value = data.name
    inputDescription.value = data.description
-   userInfo = null
    popupEditValidator.resetFormValidityMessage()
-   popupEditValidator.isButtonValid()
+   popupEditValidator.setButtonValid()
    popupEdit.openPopup()
 })
 
 // * Слушатели для добавления карточки
 buttonAdd.addEventListener('click', () => {
    popupAddValidator.resetFormValidityMessage()
-   popupAddValidator.isButtonValid()
+   popupAddValidator.setButtonValid()
    popupAdd.openPopup()
 })
 
 
 // * Рендер начальных карточек
-section.initRender()
+cardsContainer.initRender()
+
+export {handleCardClick, renderCard, userInfo}

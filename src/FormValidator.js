@@ -1,5 +1,4 @@
 export default class FormValidator {
-   q
 
    constructor(parameters, formName) {
       this._formElementSelector = parameters.formElement
@@ -9,6 +8,7 @@ export default class FormValidator {
       this._formNameSelector = formName
       // Текущая форма для валидации
       this._form = document.querySelector(this._formNameSelector)
+      this._buttonSubmit = this._form.querySelector(this._buttonElementSelector)
       // Все инпуты в форме
       this._inputsList = Array.from(this._form.querySelectorAll(this._formInputSelector))
    }
@@ -20,7 +20,7 @@ export default class FormValidator {
             // * 3. Валидация инпута
             this._validateInput(evt)
             // * 4. Валидация кнопки Submit
-            this.isButtonValid()
+            this.setButtonValid()
          })
       })
    }
@@ -40,8 +40,7 @@ export default class FormValidator {
    }
 
    // * 4. Валидация кнопки Submit
-   isButtonValid() {
-      this._buttonSubmit = this._form.querySelector(this._buttonElementSelector)
+   setButtonValid() {
       if (!this._form.checkValidity()) {
          this._buttonSubmit.classList.add(this._buttonElementDisabledSelector)
          this._buttonSubmit.disabled = true
@@ -49,7 +48,6 @@ export default class FormValidator {
          this._buttonSubmit.classList.remove(this._buttonElementDisabledSelector)
          this._buttonSubmit.disabled = false
       }
-      this._buttonSubmit = null
    }
 
    resetFormValidityMessage() {
