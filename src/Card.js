@@ -31,11 +31,8 @@ export default class Card {
       this._newCard._imageButton.addEventListener('click', this._handleCardClick)
    }
 
-   renderCard(cardPlace) {
-      document.querySelector(cardPlace).prepend(this._createCard())
-   }
 
-   _createCard() {
+   createCard() {
       this._newCard = this._getTemplate()
       // Определения граф с информацией
       this._newCard._imageElement = this._newCard.querySelector('.element__image')

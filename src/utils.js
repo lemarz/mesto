@@ -1,6 +1,7 @@
 import Card from "./Card.js";
 import PopupWithImage from "./PopupWithImage.js";
 import UserInfo from "./UserInfo";
+import Section from "./Section";
 
 
 // * Коллбек для открытия карточки
@@ -14,7 +15,12 @@ const handleCardClick = (item) => {
 // * Добавление карточек
 const renderer = (item) => {
    let card = new Card(item, '#card', () => handleCardClick(item))
-   card.renderCard('.elements')
+   let section = new Section({
+      renderer: renderer
+   }, '.elements')
+   const cardEl = card.createCard()
+   section.addItem(cardEl)
+   section = null
    card = null
 }
 // * Обработчик формы редактирования профиля
