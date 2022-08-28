@@ -1,5 +1,5 @@
-import {renderCard} from "./index.js";
-import {userInfo} from "./index.js";
+import {renderCard} from "./pages";
+import {userInfo} from "./pages";
 
 
 // * Обработчик формы редактирования профиля
