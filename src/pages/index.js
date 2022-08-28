@@ -1,7 +1,7 @@
 import './index.css';
 
 import {initialCards} from "../initial-сards.js";
-import {handleSubmitEditForm, handleSubmitAddForm} from "../utils.js";
+
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -34,46 +34,57 @@ popupAddValidator.enableValidation()
 const popupEditValidator = new FormValidator(parameters, '[name = edit-popup_form]')
 popupEditValidator.enableValidation()
 
+// * Экземпляр для редактирования профиля
+const userInfo = new UserInfo({
+   profileNameSelector: '.profile__name',
+   profileDescriptionSelector: '.profile__description'
+})
+
+// * Экземпляр папапа просмотра карточек
+const popupView = new PopupWithImage('#viewer-popup')
+popupView.setEventListeners()
 
 //!__________
 
-const popupView = new PopupWithImage('#viewer-popup')
-
 // * Коллбек для открытия карточки
-const handleCardClick = (item) => {
-   popupView.setEventListeners()
-   popupView.openPopup(item)
-}
-
+const handleCardClick = (item) => popupView.openPopup(item)
 // * Добавление карточек
-const renderCard = (item) => {
-   const card = new Card(item, '#card', () => handleCardClick(item))
+const renderCard = (cardData) => {
+   const card = new Card(cardData, '#card', () => handleCardClick(cardData))
    const cardEl = card.createCard()
    cardsContainer.addItem(cardEl)
 }
+
 
 // * Экземпляр класса Section
 const cardsContainer = new Section({
    items: initialCards,
    renderer: renderCard
 }, '.elements')
+// * Рендер начальных карточек
+cardsContainer.initRender()
 
 
+// * Обработчик формы редактирования профиля
+const handleSubmitEditForm = ({name, description}) => userInfo.setUserInfo({name, description})
 // * Экземпляр для #edit-popup
 const popupEdit = new PopupWithForm('#edit-popup', handleSubmitEditForm)
 popupEdit.setEventListeners()
 
 
+// * Обработчик формы добавления карточки
+const handleSubmitAddForm = ({title, link}) => {
+   renderCard({
+      name: title,
+      link: link
+   })
+}
 // * Экземпляр для #add-popup
 const popupAdd = new PopupWithForm('#add-popup', handleSubmitAddForm)
 popupAdd.setEventListeners()
 
+
 //!__________
-// * Экземпляр для редактирования профиля
-const userInfo = new UserInfo({
-   profileNameSelector: '.profile__name',
-   profileDescriptionSelector: '.profile__description'
-})
 
 // * Слушатели для редактирования профиля
 buttonEdit.addEventListener('click', () => {
@@ -91,9 +102,3 @@ buttonAdd.addEventListener('click', () => {
    popupAddValidator.setButtonValid()
    popupAdd.openPopup()
 })
-
-
-// * Рендер начальных карточек
-cardsContainer.initRender()
-
-export {handleCardClick, renderCard, userInfo}
