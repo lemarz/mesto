@@ -1,13 +1,10 @@
 .element__like-button {
-   background-image: url(../../../images/like_disabled.svg);
-   min-width: 22px;
-   height: 19px;
-   border: none;
-   margin-left: auto;
-   margin-right: 20px;
-   justify-self: flex-end;
+    background-image: url(../../../images/like_disabled.svg);
+    min-width: 22px;
+    height: 19px;
+    border: none;
 }
 
 .element__like-button:hover {
-   opacity: 0.5;
+    opacity: 0.5;
 }

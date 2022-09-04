@@ -2,6 +2,7 @@ export default class Card {
    constructor(data, templateSelector, handleCardClick) {
       this._titile = data.name
       this._link = data.link
+      this._likeAmount = data.likes
       this._templateSelector = templateSelector
       this._handleCardClick = handleCardClick
    }
@@ -37,10 +38,16 @@ export default class Card {
       // Определения граф с информацией
       this._newCard._imageElement = this._newCard.querySelector('.element__image')
       this._newCard._textElement = this._newCard.querySelector('.element__title')
+      this._newCard._likeCounter = this._newCard.querySelector('.element__like-counter')
       // Заполнение граф данными информацией из объекта
       this._newCard._textElement.textContent = this._titile
       this._newCard._imageElement.alt = this._titile
       this._newCard._imageElement.src = this._link
+      if (this._likeAmount === undefined) {
+         this._newCard._likeCounter.textContent = 0
+      } else {
+         this._newCard._likeCounter.textContent = this._likeAmount.length
+      }
       // Определение кнопок на карточке
       this._newCard._deleteButton = this._newCard.querySelector('.element__delete-button')
       this._newCard._likeButton = this._newCard.querySelector('.element__like-button')
