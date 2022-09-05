@@ -8,6 +8,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Card from "../components/Card.js";
+import Api from "../components/Api";
 
 
 // * Поля формы редактирования
@@ -37,12 +38,23 @@ popupEditValidator.enableValidation()
 // * Экземпляр для редактирования профиля
 const userInfo = new UserInfo({
    profileNameSelector: '.profile__name',
-   profileDescriptionSelector: '.profile__description'
+   profileDescriptionSelector: '.profile__description',
+   profileAvatarSelector: '.profile__avatar'
 })
 
 // * Экземпляр папапа просмотра карточек
 const popupView = new PopupWithImage('#viewer-popup')
 popupView.setEventListeners()
+
+
+// * Экземпляр API
+const api = new Api({
+   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-49',
+   headers: {
+      authorization: '163484ca-6b36-4c0d-b70e-87e23e1f729b',
+      'Content-Type': 'application/json'
+   }
+})
 
 //!__________
 
@@ -96,9 +108,23 @@ buttonEdit.addEventListener('click', () => {
    popupEdit.openPopup()
 })
 
+
 // * Слушатели для добавления карточки
 buttonAdd.addEventListener('click', () => {
    popupAddValidator.resetFormValidityMessage()
    popupAddValidator.setButtonValid()
    popupAdd.openPopup()
 })
+
+
+// * Описание профиля с сервера
+api.getUserInfo()
+   .then(profileData => {
+      const {name, about, avatar} = profileData
+      userInfo.setUserInfo({
+         name: name,
+         description: about
+      })
+      userInfo.setUserAvatar(avatar)
+   })
+   .catch(err => console.error(err))
