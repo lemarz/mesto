@@ -78,7 +78,14 @@ api.getInitialCards()
 
 
 // * Обработчик формы редактирования профиля
-const handleSubmitEditForm = ({name, description}) => userInfo.setUserInfo({name, description})
+const handleSubmitEditForm = ({name, description}) => {
+   api.setUserInfo({
+      name: name,
+      about: description
+   })
+      .then(() => userInfo.setUserInfo({name, description}))
+      .catch(err => console.error(err))
+}
 // * Экземпляр для #edit-popup
 const popupEdit = new PopupWithForm('#edit-popup', handleSubmitEditForm)
 popupEdit.setEventListeners()

@@ -20,4 +20,15 @@ export default class Api {
    getInitialCards() {
       return fetch(`${this._baseUrl}/cards`, {headers: this._headers}).then(this._handleResponse)
    }
+
+   setUserInfo(userInfo) {
+      return fetch(`${this._baseUrl}/users/me`, {
+         method: 'PATCH',
+         headers: this._headers,
+         body: JSON.stringify({
+            name: userInfo.name,
+            about: userInfo.about
+         }),
+      }).then(this._handleResponse)
+   }
 }
