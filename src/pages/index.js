@@ -93,10 +93,9 @@ popupEdit.setEventListeners()
 
 // * Обработчик формы добавления карточки
 const handleSubmitAddForm = ({title, link}) => {
-   renderCard({
-      name: title,
-      link: link
-   })
+   api.addCard(title, link)
+      .then(res => renderCard(res))
+      .catch(err => console.error(err))
 }
 // * Экземпляр для #add-popup
 const popupAdd = new PopupWithForm('#add-popup', handleSubmitAddForm)
