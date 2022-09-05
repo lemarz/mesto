@@ -7,6 +7,7 @@ import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Card from "../components/Card.js";
 import Api from "../components/Api";
+import PopupConfirm from "../components/PopupConfirm";
 
 
 // * Поля формы редактирования
@@ -17,6 +18,7 @@ const inputDescription = document.querySelector('.popup__input_el_description')
 const buttonEdit = document.querySelector('.profile__edit-button')
 const buttonAdd = document.querySelector('.profile__add-button')
 
+let userId = null
 
 // * Параметры для валидатора
 const parameters = {
@@ -55,13 +57,22 @@ const api = new Api({
 })
 
 //!__________
+// *  Экземпляр класса popupConfirm
+const popupConfirm = new PopupConfirm('#popup_confirm', (cardData, deleteCard) => {
+   api.deleteCard(cardData)
+      .then(() => deleteCard())
+      .catch(err => console.error(err))
+})
+popupConfirm.setEventListeners()
 // * Экземпляр класса Section
 const cardsContainer = new Section('.elements')
 // * Коллбек для открытия карточки
 const handleCardClick = (item) => popupView.openPopup(item)
 // * Добавление карточек
 const renderCard = (cardData) => {
-   const card = new Card(cardData, '#card', () => handleCardClick(cardData))
+   const card = new Card(cardData, '#card', userId,
+      () => handleCardClick(cardData),
+      () => popupConfirm.openPopup(cardData, card.handleRemoveCard))
    const cardEl = card.createCard()
    cardsContainer.addItem(cardEl)
 }
@@ -83,7 +94,7 @@ const handleSubmitEditForm = ({name, description}) => {
       name: name,
       about: description
    })
-      .then(() => userInfo.setUserInfo({name, description}))
+      .then(res => userInfo.setUserInfo(res))
       .catch(err => console.error(err))
 }
 // * Экземпляр для #edit-popup
@@ -124,13 +135,10 @@ buttonAdd.addEventListener('click', () => {
 
 
 // * Описание профиля с сервера
-api.getUserInfo()
-   .then(profileData => {
-      const {name, about, avatar} = profileData
-      userInfo.setUserInfo({
-         name: name,
-         description: about
-      })
-      userInfo.setUserAvatar(avatar)
+Promise.all([api.getUserInfo()])
+   .then(([profileData]) => {
+      userId = profileData._id
+      userInfo.setUserInfo(profileData)
+      userInfo.setUserAvatar(profileData.avatar)
    })
    .catch(err => console.error(err))

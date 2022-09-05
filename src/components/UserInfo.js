@@ -13,9 +13,9 @@ export default class UserInfo {
    }
 
 
-   setUserInfo({name, description}) {
-      this._profileName.textContent = name
-      this._profileDescription.textContent = description
+   setUserInfo(data) {
+      this._profileName.textContent = data.name
+      this._profileDescription.textContent = data.about
    }
 
    setUserAvatar(link) {

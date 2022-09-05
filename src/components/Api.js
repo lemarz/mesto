@@ -42,4 +42,12 @@ export default class Api {
          }),
       }).then(this._handleResponse);
    }
+
+   deleteCard(data) {
+      return fetch(`${this._baseUrl}/cards/${data._id}`, {
+         method: "DELETE",
+         headers: this._headers,
+      })
+         .then(this._handleResponse)
+   }
 }
