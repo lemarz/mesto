@@ -1,7 +1,5 @@
 import './index.css';
 
-import {initialCards} from "../initial-сards.js";
-
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -57,7 +55,8 @@ const api = new Api({
 })
 
 //!__________
-
+// * Экземпляр класса Section
+const cardsContainer = new Section('.elements')
 // * Коллбек для открытия карточки
 const handleCardClick = (item) => popupView.openPopup(item)
 // * Добавление карточек
@@ -68,13 +67,14 @@ const renderCard = (cardData) => {
 }
 
 
-// * Экземпляр класса Section
-const cardsContainer = new Section({
-   items: initialCards,
-   renderer: renderCard
-}, '.elements')
 // * Рендер начальных карточек
-cardsContainer.initRender()
+api.getInitialCards()
+   .then(cards => {
+      cards.reverse().forEach(cardData => {
+         renderCard(cardData)
+      })
+   })
+   .catch(err => console.error(err))
 
 
 // * Обработчик формы редактирования профиля

@@ -16,4 +16,8 @@ export default class Api {
    getUserInfo() {
       return fetch(`${this._baseUrl}/users/me`, {headers: this._headers}).then(this._handleResponse);
    }
+
+   getInitialCards() {
+      return fetch(`${this._baseUrl}/cards`, {headers: this._headers}).then(this._handleResponse)
+   }
 }
