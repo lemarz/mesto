@@ -94,7 +94,10 @@ const handleSubmitEditForm = ({name, description}) => {
       name: name,
       about: description
    })
-      .then(res => userInfo.setUserInfo(res))
+      .then(res => {
+         userInfo.setUserInfo(res)
+         popupEdit.closePopup()
+      })
       .catch(err => console.error(err))
 }
 // * Экземпляр для #edit-popup
@@ -105,7 +108,10 @@ popupEdit.setEventListeners()
 // * Обработчик формы добавления карточки
 const handleSubmitAddForm = ({title, link}) => {
    api.addCard(title, link)
-      .then(res => renderCard(res))
+      .then(res => {
+         renderCard(res)
+         popupAdd.closePopup()
+      })
       .catch(err => console.error(err))
 }
 // * Экземпляр для #add-popup
