@@ -12,3 +12,8 @@
         margin-bottom: 22px;
     }
 }
+
+.profile__avatar:hover {
+    cursor: pointer;
+    opacity: 0.2;
+}

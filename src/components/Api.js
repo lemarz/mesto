@@ -1,3 +1,5 @@
+import PopupWithForm from "./PopupWithForm";
+
 export default class Api {
 
    constructor(options) {
@@ -49,5 +51,15 @@ export default class Api {
          headers: this._headers,
       })
          .then(this._handleResponse)
+   }
+
+   setAvatar(avatarUrl) {
+      return fetch(`${this._baseUrl}/users/me/avatar `, {
+         method: "PATCH",
+         headers: this._headers,
+         body: JSON.stringify({
+            avatar: avatarUrl,
+         }),
+      })
    }
 }

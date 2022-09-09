@@ -17,6 +17,7 @@ const inputDescription = document.querySelector('.popup__input_el_description')
 // * Кнопки открытия попапа
 const buttonEdit = document.querySelector('.profile__edit-button')
 const buttonAdd = document.querySelector('.profile__add-button')
+const buttonAvatar = document.querySelector('.profile__avatar')
 
 let userId = null
 
@@ -34,6 +35,8 @@ const popupAddValidator = new FormValidator(parameters, '[name = add-popup_form]
 popupAddValidator.enableValidation()
 const popupEditValidator = new FormValidator(parameters, '[name = edit-popup_form]')
 popupEditValidator.enableValidation()
+const popupAvatarValidator = new FormValidator(parameters, '[name = avatar-popup_form]')
+popupAvatarValidator.enableValidation()
 
 // * Экземпляр для редактирования профиля
 const userInfo = new UserInfo({
@@ -119,6 +122,19 @@ const popupAdd = new PopupWithForm('#add-popup', handleSubmitAddForm)
 popupAdd.setEventListeners()
 
 
+// * Обработчик формы изменения аватара
+const handleSubmitAvatarForm = (data) => {
+   api.setAvatar(data.avatar)
+      .then(() => {
+         userInfo.setUserAvatar(data.avatar)
+         avatarPopup.closePopup()
+      })
+      .catch(err => console.error(err))
+}
+// * Экземпляр для #avatar-popup
+const avatarPopup = new PopupWithForm('#avatar-popup', handleSubmitAvatarForm)
+avatarPopup.setEventListeners()
+
 //!__________
 
 // * Слушатели для редактирования профиля
@@ -137,6 +153,14 @@ buttonAdd.addEventListener('click', () => {
    popupAddValidator.resetFormValidityMessage()
    popupAddValidator.setButtonValid()
    popupAdd.openPopup()
+})
+
+
+// * Слушатели для редактирования аватара
+buttonAvatar.addEventListener('click', () => {
+   popupAvatarValidator.resetFormValidityMessage()
+   popupAvatarValidator.setButtonValid()
+   avatarPopup.openPopup()
 })
 
 
