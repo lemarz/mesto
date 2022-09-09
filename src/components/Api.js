@@ -10,9 +10,8 @@ export default class Api {
    _handleResponse(res) {
       if (res.ok) {
          return res.json();
-      } else {
-         return Promise.reject(`Ошибка: ${res.status}`);
       }
+      return Promise.reject(`Ошибка: ${res.status}`)
    }
 
    getUserInfo() {
@@ -27,10 +26,7 @@ export default class Api {
       return fetch(`${this._baseUrl}/users/me`, {
          method: 'PATCH',
          headers: this._headers,
-         body: JSON.stringify({
-            name: userInfo.name,
-            about: userInfo.about
-         }),
+         body: JSON.stringify({...userInfo}),
       }).then(this._handleResponse)
    }
 
@@ -49,8 +45,7 @@ export default class Api {
       return fetch(`${this._baseUrl}/cards/${data._id}`, {
          method: "DELETE",
          headers: this._headers,
-      })
-         .then(this._handleResponse)
+      }).then(this._handleResponse)
    }
 
    setAvatar(avatarUrl) {
@@ -60,7 +55,7 @@ export default class Api {
          body: JSON.stringify({
             avatar: avatarUrl,
          }),
-      })
+      }).then(this._handleResponse)
    }
 
    likeCard(id) {

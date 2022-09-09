@@ -1,5 +1,7 @@
 import './index.css';
 
+import {inputName, inputDescription, buttonEdit, buttonAdd, buttonAvatar, parameters} from "../components/constants.js";
+
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -10,25 +12,7 @@ import Api from "../components/Api";
 import PopupConfirm from "../components/PopupConfirm";
 
 
-// * Поля формы редактирования
-const inputName = document.querySelector('.popup__input_el_name')
-const inputDescription = document.querySelector('.popup__input_el_description')
-
-// * Кнопки открытия попапа
-const buttonEdit = document.querySelector('.profile__edit-button')
-const buttonAdd = document.querySelector('.profile__add-button')
-const buttonAvatar = document.querySelector('.profile__avatar')
-
 let userId = null
-
-// * Параметры для валидатора
-const parameters = {
-   formElement: '.popup__form',
-   formInput: '.popup__input',
-   buttonElement: '.popup__save-button',
-   buttonElementDisabled: 'popup__save-button_disabled',
-}
-
 
 // * Валидаторы и их включение
 const popupAddValidator = new FormValidator(parameters, '[name = add-popup_form]')
@@ -61,46 +45,43 @@ const api = new Api({
 
 //!__________
 // *  Экземпляр класса popupConfirm
-const popupConfirm = new PopupConfirm('#popup_confirm', (cardData, deleteCard) => {
+const popupConfirm = new PopupConfirm('#popup_confirm', (cardData) => {
    api.deleteCard(cardData)
-      .then(() => deleteCard())
+      .then(() => popupConfirm.closePopup())
       .catch(err => console.error(err))
 })
 popupConfirm.setEventListeners()
 // * Экземпляр класса Section
 const cardsContainer = new Section('.elements')
 // * Коллбек для открытия карточки
-const handleCardClick = (item) => {
-   popupView.openPopup(item)
-   console.log(item._id)
+const handleCardClick = card => {
+   popupView.openPopup(card)
 }
-// * Добавление карточек
+// * Рендер карточек
 const renderCard = (cardData) => {
    const card = new Card(cardData, '#card', userId,
       () => handleCardClick(cardData),
-      () => popupConfirm.openPopup(cardData, card.handleRemoveCard),
+      () => {
+         popupConfirm.setCallback(card.handleRemoveCard)
+         popupConfirm.openPopup(cardData)
+      },
 
       (id) => api.likeCard(id)
-         .then(res => card.setLikeCount(res))
+         .then(res => {
+            card.setLikeCount(res)
+            card.like()
+         })
          .catch(err => console.error(err)),
 
       (id) => api.dislikeCard(id)
-         .then(res => card.setLikeCount(res))
+         .then(res => {
+            card.setLikeCount(res)
+            card.dislike()
+         })
          .catch(err => console.error(err)))
 
-   const cardEl = card.createCard()
-   cardsContainer.addItem(cardEl)
+   return card.createCard()
 }
-
-
-// * Рендер начальных карточек
-api.getInitialCards()
-   .then(cards => {
-      cards.reverse().forEach(cardData => {
-         renderCard(cardData)
-      })
-   })
-   .catch(err => console.error(err))
 
 
 // * Обработчик формы редактирования профиля
@@ -124,7 +105,8 @@ popupEdit.setEventListeners()
 const handleSubmitAddForm = ({title, link}) => {
    api.addCard(title, link)
       .then(res => {
-         renderCard(res)
+         const cardEl = renderCard(res)
+         cardsContainer.addItem(cardEl)
          popupAdd.closePopup()
       })
       .catch(err => console.error(err))
@@ -175,12 +157,16 @@ buttonAvatar.addEventListener('click', () => {
    avatarPopup.openPopup()
 })
 
-
 // * Описание профиля с сервера
-Promise.all([api.getUserInfo()])
-   .then(([profileData]) => {
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+   .then(([profileData, cards]) => {
       userId = profileData._id
       userInfo.setUserInfo(profileData)
       userInfo.setUserAvatar(profileData.avatar)
+
+      cards.reverse().forEach(cardData => {
+         const cardEl = renderCard(cardData)
+         cardsContainer.addItem(cardEl)
+      })
    })
    .catch(err => console.error(err))
