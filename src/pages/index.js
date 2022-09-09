@@ -70,12 +70,24 @@ popupConfirm.setEventListeners()
 // * Экземпляр класса Section
 const cardsContainer = new Section('.elements')
 // * Коллбек для открытия карточки
-const handleCardClick = (item) => popupView.openPopup(item)
+const handleCardClick = (item) => {
+   popupView.openPopup(item)
+   console.log(item._id)
+}
 // * Добавление карточек
 const renderCard = (cardData) => {
    const card = new Card(cardData, '#card', userId,
       () => handleCardClick(cardData),
-      () => popupConfirm.openPopup(cardData, card.handleRemoveCard))
+      () => popupConfirm.openPopup(cardData, card.handleRemoveCard),
+
+      (id) => api.likeCard(id)
+         .then(res => card.setLikeCount(res))
+         .catch(err => console.error(err)),
+
+      (id) => api.dislikeCard(id)
+         .then(res => card.setLikeCount(res))
+         .catch(err => console.error(err)))
+
    const cardEl = card.createCard()
    cardsContainer.addItem(cardEl)
 }

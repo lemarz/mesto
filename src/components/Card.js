@@ -1,5 +1,5 @@
 export default class Card {
-   constructor(data, templateSelector, userId, handleCardClick, delHandler) {
+   constructor(data, templateSelector, userId, handleCardClick, delHandler, likeHandler, dislikeHandler) {
       this._titile = data.name
       this._link = data.link
       this._likeAmount = data.likes
@@ -9,6 +9,8 @@ export default class Card {
       this._data = data
       this._userId = userId
       this._ownerId = this._data.owner._id
+      this._likeHandler = likeHandler
+      this._dislikeHandler = dislikeHandler
    }
 
    _getTemplate() {
@@ -25,14 +27,45 @@ export default class Card {
       this._newCard = null
    }
 
-   _handleLike = () => {
-      this._newCard._likeButton.classList.toggle('element__like-button_active')
-   };
+   isOwner() {
+      if (this._ownerId !== this._userId) {
+         this._newCard._deleteButton.remove()
+      }
+   }
 
+   like = () => {
+      this._newCard._likeButton.classList.add('element__like-button_active')
+   }
+
+   dislike = () => {
+      this._newCard._likeButton.classList.remove('element__like-button_active')
+   }
+
+   _isLiked = () => {
+      this._data.likes.forEach(item => {
+         if (item._id === this._userId) {
+            this.like()
+         }
+      })
+   }
+
+   setLikeCount = (data) => {
+      this._newCard._likeCounter.textContent = data.likes.length
+   }
 
    _addEventListeners() {
       this._newCard._deleteButton.addEventListener('click', this._delHandler)
-      this._newCard._likeButton.addEventListener('click', this._handleLike)
+      this._newCard._likeButton.addEventListener('click', () => {
+         if (!this._newCard._likeButton.classList.contains('element__like-button_active')) {
+            this._likeHandler(this._data._id)
+            this.like()
+         } else {
+            this._dislikeHandler(this._data._id)
+            this.dislike()
+         }
+
+
+      })
       this._newCard._imageButton.addEventListener('click', this._handleCardClick)
    }
 
@@ -58,17 +91,10 @@ export default class Card {
       this._newCard._imageButton = this._newCard.querySelector('.element__image')
 
       this.isOwner()
-
+      this._isLiked()
       this._addEventListeners()
 
       return this._newCard
-   }
-
-   isOwner() {
-      if (this._ownerId !== this._userId) {
-         this._newCard._deleteButton.remove()
-      }
-
    }
 
 }
