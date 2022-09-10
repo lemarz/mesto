@@ -1,11 +1,10 @@
 import Popup from "./Popup";
 
 export default class PopupConfirm extends Popup {
-   constructor(popupSelector, delHandler) {
+   constructor(popupSelector) {
       super(popupSelector)
       this._confirmButton = this._popup.querySelector('.popup__confirm-button')
       this._currentCard = null
-      this._delHandler = delHandler
    }
 
    openPopup(cardData) {
@@ -24,7 +23,6 @@ export default class PopupConfirm extends Popup {
          evt.preventDefault()
          this._confirmButton.textContent = 'Удаление...'
          this._deleteCardCallBack()
-         this._delHandler(this._currentCard)
          this._currentCard = null
       })
    }

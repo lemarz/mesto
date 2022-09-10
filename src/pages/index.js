@@ -45,14 +45,11 @@ const api = new Api({
 
 //!__________
 // *  Экземпляр класса popupConfirm
-const popupConfirm = new PopupConfirm('#popup_confirm', (cardData) => {
-   api.deleteCard(cardData)
-      .then(() => popupConfirm.closePopup())
-      .catch(err => console.error(err))
-})
+const popupConfirm = new PopupConfirm('#popup_confirm')
 popupConfirm.setEventListeners()
 // * Экземпляр класса Section
 const cardsContainer = new Section('.elements')
+
 // * Коллбек для открытия карточки
 const handleCardClick = card => {
    popupView.openPopup(card)
@@ -61,8 +58,16 @@ const handleCardClick = card => {
 const renderCard = (cardData) => {
    const card = new Card(cardData, '#card', userId,
       () => handleCardClick(cardData),
+
       () => {
-         popupConfirm.setCallback(card.handleRemoveCard)
+         popupConfirm.setCallback(() => {
+            api.deleteCard(cardData)
+               .then(() => {
+                  card.handleRemoveCard()
+                  popupConfirm.closePopup()
+               })
+               .catch(err => console.error(err))
+         })
          popupConfirm.openPopup(cardData)
       },
 
@@ -141,14 +146,12 @@ buttonEdit.addEventListener('click', () => {
    popupEdit.openPopup()
 })
 
-
 // * Слушатели для добавления карточки
 buttonAdd.addEventListener('click', () => {
    popupAddValidator.resetFormValidityMessage()
    popupAddValidator.setButtonValid()
    popupAdd.openPopup()
 })
-
 
 // * Слушатели для редактирования аватара
 buttonAvatar.addEventListener('click', () => {
@@ -157,7 +160,9 @@ buttonAvatar.addEventListener('click', () => {
    avatarPopup.openPopup()
 })
 
-// * Описание профиля с сервера
+//!__________
+
+// * Описание профиля и начальные карточки с сервера
 Promise.all([api.getUserInfo(), api.getInitialCards()])
    .then(([profileData, cards]) => {
       userId = profileData._id

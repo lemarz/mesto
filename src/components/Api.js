@@ -1,5 +1,3 @@
-import PopupWithForm from "./PopupWithForm";
-
 export default class Api {
 
    constructor(options) {
